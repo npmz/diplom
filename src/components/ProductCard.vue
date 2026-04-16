@@ -1,9 +1,10 @@
 <template>
-  <div class="product-card">
+  <div class="product-card" @click="$emit('openDetails', product)">
     <img :src="product.image" :alt="product.name" />
     <h3>{{ product.name }}</h3>
     <p class="price">{{ product.price }} ₽</p>
-    <button @click="addToCart" class="add-btn">В корзину</button>
+
+    <button @click.stop="addToCart" class="add-btn">В корзину</button>
   </div>
 </template>
 
@@ -17,23 +18,30 @@ const props = defineProps({
   }
 })
 
+// Объявляем, что компонент может генерировать событие openDetails
+defineEmits(['openDetails'])
+
 const addToCart = () => {
   store.addToCart(props.product)
 }
 </script>
 
 <style scoped>
+/* Добавляем курсор-указатель, чтобы показать, что карточка кликабельна */
 .product-card {
   background: white;
   padding: 1.5rem;
   border-radius: 8px;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
 }
 .product-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.15);
 }
+/* ... остальной код стилей остается без изменений ... */
 .product-card img {
   max-width: 100%;
   border-radius: 4px;
