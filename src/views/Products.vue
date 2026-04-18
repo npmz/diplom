@@ -151,7 +151,7 @@ const allProducts = ref([
     name: 'Red Dead Redemption 2 (Steam)',
     category: 'Games',
     price: 2400,
-    image: '/images/rdr2.jfif'
+    image: '/images/rdr2.avif'
   },
   {
     id: 13,
@@ -165,7 +165,7 @@ const allProducts = ref([
     name: 'The Witcher 3: Wild Hunt',
     category: 'Games',
     price: 900,
-    image: '/images/tw3.jfif'
+    image: '/images/tw3.avif'
   },
   {
     id: 15,
@@ -186,7 +186,7 @@ const allProducts = ref([
     name: 'Hogwarts Legacy (Steam)',
     category: 'Games',
     price: 2800,
-    image: '/images/hl.png'
+    image: '/images/hleg.png'
   },
   {
     id: 18,
