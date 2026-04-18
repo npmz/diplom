@@ -12,6 +12,10 @@
         <router-link to="/" class="nav-link">Главная</router-link>
         <router-link to="/products" class="nav-link">Каталог</router-link>
 
+        <router-link to="/profile" class="nav-link profile-link">
+          👤 {{ store.isAuthenticated ? store.currentUser.name : 'Войти' }}
+        </router-link>
+
         <router-link to="/cart" class="cart-link nav-link">
           <span class="cart-icon">🛒</span>
           <span class="cart-text">Корзина</span>
