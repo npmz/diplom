@@ -3,14 +3,12 @@
     <div class="image-container">
       <img :src="product.image" :alt="product.name" />
 
-      <div v-if="product.isCustom" class="user-badge">
-        Добавлено пользователем
-      </div>
+      <div v-if="product.isCustom" class="user-badge">Добавлено пользователем</div>
 
       <button
           class="favorite-btn"
           :class="{ 'is-active': store.isFavorite(product.id) }"
-          @click.stop="store.toggleFavorite(product)"
+          @click.stop="handleFavoriteClick"
       >
         <span v-if="store.isFavorite(product.id)">❤️</span>
         <span v-else>🤍</span>
@@ -30,12 +28,18 @@
 import { ref } from 'vue'
 import { store } from '../store.js'
 
-const props = defineProps({
-  product: {
-    type: Object,
-    required: true
+
+const props = defineProps(['product'])
+
+
+const handleFavoriteClick = () => {
+  if (store.isAuthenticated) {
+    store.toggleFavorite(props.product)
+  } else {
+    // ВЫЗЫВАЕМ КРАСИВОЕ ОКНО ВМЕСТО ALERT
+    store.openAuthModal()
   }
-})
+}
 
 defineEmits(['openDetails'])
 

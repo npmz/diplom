@@ -165,5 +165,16 @@ export const store = reactive({
 
         // Очищаем корзину при выходе
         this.clearCart()
-    }
+    },
+
+    // --- УПРАВЛЕНИЕ ГЛОБАЛЬНЫМИ ОКНАМИ ---
+    isAuthModalOpen: false,
+
+    openAuthModal() {
+        this.isAuthModalOpen = true;
+    },
+
+    closeAuthModal() {
+        this.isAuthModalOpen = false;
+    },
 })

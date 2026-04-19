@@ -53,9 +53,63 @@
       <button @click="store.logoutUser()" class="logout-btn">Выйти из аккаунта</button>
     </div>
 
-    <div v-else class="auth-container surface-box">
-      <p>Пожалуйста, войдите, чтобы увидеть профиль.</p>
-      <router-link to="/login" class="btn btn-primary">Войти</router-link>
+    <div v-else class="auth-wrapper">
+      <div class="auth-container surface-box">
+
+        <div class="auth-header">
+          <div class="logo-circle">🔑</div>
+          <h2>{{ isLoginTab ? 'С возвращением!' : 'Создать аккаунт' }}</h2>
+          <p class="auth-subtitle">
+            {{ isLoginTab ? 'Рады видеть вас снова. Войдите, чтобы продолжить.' : 'Присоединяйтесь к AllKeys и покупайте выгодно.' }}
+          </p>
+        </div>
+
+        <div class="auth-tabs-modern">
+          <div class="tab-slider" :class="{ 'right': !isLoginTab }"></div>
+          <button :class="{ active: isLoginTab }" @click="isLoginTab = true">Вход</button>
+          <button :class="{ active: !isLoginTab }" @click="isLoginTab = false">Регистрация</button>
+        </div>
+
+        <transition name="fade">
+          <div v-if="errorMessage" class="error-msg">⚠️ {{ errorMessage }}</div>
+        </transition>
+
+        <form v-if="isLoginTab" @submit.prevent="handleLogin" class="auth-form">
+          <div class="input-group">
+            <span class="input-icon">✉️</span>
+            <input type="email" v-model="loginData.email" required placeholder="Ваш Email">
+          </div>
+          <div class="input-group">
+            <span class="input-icon">🔒</span>
+            <input type="password" v-model="loginData.password" required placeholder="Пароль">
+          </div>
+
+          <div class="form-options">
+            <label class="remember-me"><input type="checkbox"> Запомнить меня</label>
+            <a href="#" class="forgot-password">Забыли пароль?</a>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100">Войти в аккаунт</button>
+        </form>
+
+        <form v-else @submit.prevent="handleRegister" class="auth-form">
+          <div class="input-group">
+            <span class="input-icon">👤</span>
+            <input type="text" v-model="registerData.name" required placeholder="Как к вам обращаться?">
+          </div>
+          <div class="input-group">
+            <span class="input-icon">✉️</span>
+            <input type="email" v-model="registerData.email" required placeholder="Ваш Email">
+          </div>
+          <div class="input-group">
+            <span class="input-icon">🔒</span>
+            <input type="password" v-model="registerData.password" required placeholder="Придумайте пароль" minlength="6">
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100">Зарегистрироваться</button>
+        </form>
+
+      </div>
     </div>
   </div>
 </template>
@@ -235,19 +289,178 @@ const handleLogout = () => {
 }
 
 /* --- СТИЛИ АВТОРИЗАЦИИ --- */
-.auth-container {
-  background-color: var(--color-surface);
+/* --- ОБНОВЛЕННАЯ СТРАНИЦА АВТОРИЗАЦИИ --- */
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
   width: 100%;
-  max-width: 400px;
-  border-radius: 12px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.05);
-  overflow: hidden;
 }
 
-.auth-tabs {
-  display: flex;
-  border-bottom: 2px solid #ecf0f1;
+.auth-container {
+  width: 100%;
+  max-width: 450px;
+  padding: 3rem 2.5rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  text-align: center;
 }
+
+/* Приветствие */
+.logo-circle {
+  font-size: 3rem;
+  background: rgba(66, 185, 131, 0.1);
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 1.5rem auto;
+  box-shadow: 0 0 20px rgba(66, 185, 131, 0.2);
+}
+
+.auth-header h2 {
+  color: var(--color-text-main);
+  margin-bottom: 0.5rem;
+  font-size: 1.8rem;
+}
+
+.auth-subtitle {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+}
+
+/* Современные вкладки-пилюли */
+.auth-tabs-modern {
+  display: flex;
+  position: relative;
+  background: var(--color-bg-body);
+  border-radius: var(--radius-pill);
+  padding: 0.3rem;
+  margin-bottom: 2rem;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.tab-slider {
+  position: absolute;
+  top: 0.3rem;
+  left: 0.3rem;
+  width: calc(50% - 0.3rem);
+  height: calc(100% - 0.6rem);
+  background: var(--color-surface);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 1;
+}
+
+.tab-slider.right {
+  transform: translateX(100%);
+}
+
+.auth-tabs-modern button {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 0.8rem 0;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.3s;
+}
+
+.auth-tabs-modern button.active {
+  color: var(--color-text-main);
+}
+
+/* Поля ввода с иконками */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  text-align: left;
+}
+
+.input-group {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: var(--color-text-muted);
+  pointer-events: none; /* Чтобы клик проходил сквозь иконку на инпут */
+}
+
+.input-group input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem; /* Отступ слева для иконки */
+  background: var(--color-bg-body);
+  border: 2px solid transparent;
+  color: var(--color-text-main);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  background: var(--color-surface);
+  box-shadow: 0 0 0 4px rgba(66, 185, 131, 0.1);
+}
+
+/* Опции под паролем (Запомнить / Забыли) */
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  margin-top: -0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.remember-me {
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.forgot-password {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.forgot-password:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}
+
+/* Ошибки и утилиты */
+.error-msg {
+  background: rgba(231, 76, 60, 0.1);
+  color: var(--color-danger);
+  padding: 0.8rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.w-100 { width: 100%; }
+
+.fade-enter-active, .fade-leave-active { transition: opacity 0.3s; }
+.fade-enter-from, .fade-leave-to { opacity: 0; }
 
 .auth-tabs button {
   flex: 1;
@@ -267,12 +480,7 @@ const handleLogout = () => {
   background: #fdfdfd;
 }
 
-.auth-form {
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-}
+
 
 .form-group label {
   display: block;

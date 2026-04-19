@@ -80,7 +80,6 @@ const openAddProduct = () => {
   if (store.isAuthenticated) {
     showAddModal.value = true
   } else {
-    alert('Чтобы продать товар, необходимо войти в аккаунт.')
     router.push('/profile')
   }
 }
