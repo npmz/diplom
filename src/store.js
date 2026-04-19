@@ -3,25 +3,73 @@ import { reactive } from 'vue'
 const savedUser = JSON.parse(localStorage.getItem('allkeys_session') || 'null')
 const savedCart = JSON.parse(localStorage.getItem('allkeys_cart') || '[]')
 const savedTheme = localStorage.getItem('allkeys_theme') || 'dark'
-
-// --- НОВОЕ: Загружаем добавленные пользователями товары ---
 const savedCustomProducts = JSON.parse(localStorage.getItem('allkeys_custom_products') || '[]')
+const savedPurchases = JSON.parse(localStorage.getItem('allkeys_purchases') || '[]')
+const savedFavorites = JSON.parse(localStorage.getItem('allkeys_favorites') || '[]')
 
 document.documentElement.setAttribute('data-theme', savedTheme)
 
 export const store = reactive({
-    // ... (здесь остаются ваши методы темы, корзины и профиля) ...
-
     theme: savedTheme,
+    currentUser: savedUser,
+    cart: savedCart,
+    customProducts: savedCustomProducts,
+    purchases: savedPurchases,
+    favorites: savedFavorites,
+
+    // Геттер для получения покупок именно текущего пользователя
+    get userPurchases() {
+        if (!this.currentUser) return []
+        return this.purchases.filter(p => p.userEmail === this.currentUser.email)
+    },
+
+    confirmPurchase(cartItems) {
+        if (!this.currentUser) return;
+
+        const generateRandomKey = () => {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            return Array.from({length: 3}, () =>
+                Array.from({length: 5}, () => chars[Math.floor(Math.random() * chars.length)]).join('')
+            ).join('-');
+        };
+
+        const newPurchases = cartItems.map(item => ({
+            id: Date.now() + Math.random(),
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+            image: item.image,
+            date: new Date().toLocaleDateString(),
+            userEmail: this.currentUser.email, // КРИТИЧНО: привязка к текущему юзеру
+            keys: Array.from({length: item.quantity}, () => generateRandomKey())
+        }))
+
+        this.purchases.push(...newPurchases)
+        localStorage.setItem('allkeys_purchases', JSON.stringify(this.purchases))
+        this.clearCart()
+    },
+
+    toggleFavorite(product) {
+        const index = this.favorites.findIndex(p => p.id === product.id)
+        if (index > -1) {
+            // Если уже в избранном — удаляем
+            this.favorites.splice(index, 1)
+        } else {
+            // Если нет — добавляем
+            this.favorites.push(product)
+        }
+        localStorage.setItem('allkeys_favorites', JSON.stringify(this.favorites))
+    },
+
+    isFavorite(productId) {
+        return this.favorites.some(p => p.id === productId)
+    },
+
     toggleTheme() {
         this.theme = this.theme === 'light' ? 'dark' : 'light'
         localStorage.setItem('allkeys_theme', this.theme)
         document.documentElement.setAttribute('data-theme', this.theme)
     },
-
-    // --- НОВЫЙ БЛОК: ПОЛЬЗОВАТЕЛЬСКИЕ ТОВАРЫ ---
-    // --- ПОЛЬЗОВАТЕЛЬСКИЕ ТОВАРЫ ---
-    customProducts: savedCustomProducts,
 
     addCustomProduct(product) {
         // Добавляем флаг isCustom, чтобы отличать товар в интерфейсе
@@ -34,7 +82,6 @@ export const store = reactive({
         localStorage.setItem('allkeys_custom_products', JSON.stringify(this.customProducts))
     },
     // Ниже оставляем существующий код корзины:
-    cart: savedCart,
     saveCart() {
         localStorage.setItem('allkeys_cart', JSON.stringify(this.cart))
     },
@@ -81,7 +128,6 @@ export const store = reactive({
     },
 
     // --- АВТОРИЗАЦИЯ И ПРОФИЛЬ ---
-    currentUser: savedUser,
 
     get isAuthenticated() {
         return this.currentUser !== null

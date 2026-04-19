@@ -80,18 +80,19 @@ onMounted(() => {
 })
 
 const processPayment = () => {
-  // Включаем состояние загрузки (для красоты)
   isProcessing.value = true
 
-  // Имитируем задержку банка (1.5 секунды)
   setTimeout(() => {
+    // Сохраняем товары в историю покупок
+    store.confirmPurchase(store.cart)
+
     isProcessing.value = false
-    paymentSuccess.value = true // Переключаем экран на "Успешно"
+    paymentSuccess.value = true
   }, 1500)
 }
 
 const finishAndRedirect = () => {
-  store.clearCart()
+  // Просто закрываем окно и переходим на главную (корзина уже очищена в confirmPurchase)
   emit('close')
   router.push('/')
 }

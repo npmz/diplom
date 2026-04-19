@@ -6,16 +6,21 @@
       <div v-if="product.isCustom" class="user-badge">
         Добавлено пользователем
       </div>
+
+      <button
+          class="favorite-btn"
+          :class="{ 'is-active': store.isFavorite(product.id) }"
+          @click.stop="store.toggleFavorite(product)"
+      >
+        <span v-if="store.isFavorite(product.id)">❤️</span>
+        <span v-else>🤍</span>
+      </button>
     </div>
 
     <h3>{{ product.name }}</h3>
     <p class="price">{{ product.price }} ₽</p>
 
-    <button
-        @click.stop="addToCart"
-        class="add-btn"
-        :class="{ 'added': isAdded }"
-    >
+    <button @click.stop="addToCart" class="add-btn" :class="{ 'added': isAdded }">
       {{ isAdded ? 'Добавлено ✔' : 'В корзину' }}
     </button>
   </div>
@@ -51,6 +56,35 @@ const addToCart = () => {
 </script>
 
 <style scoped>
+/* Добавьте стили для кнопки избранного */
+.favorite-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--color-surface);
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+  z-index: 3;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.favorite-btn:hover {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-md);
+}
+
+.favorite-btn.is-active {
+  background: var(--color-surface);
+}
 .product-card {
   background-color: var(--color-surface);
   padding: 1.5rem;
