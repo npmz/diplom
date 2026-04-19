@@ -110,7 +110,7 @@ const handleLogout = () => {
 
 /* --- СТИЛИ АВТОРИЗАЦИИ --- */
 .auth-container {
-  background: white;
+  background-color: var(--color-surface);
   width: 100%;
   max-width: 400px;
   border-radius: 12px;
@@ -151,7 +151,7 @@ const handleLogout = () => {
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
-  color: #2c3e50;
+  color: var(--color-text-main);
   font-weight: 500;
 }
 
@@ -203,7 +203,7 @@ const handleLogout = () => {
 }
 
 .user-info {
-  background: white;
+  background-color: var(--color-surface);
   padding: 2rem;
   border-radius: 12px;
   text-align: center;
@@ -234,7 +234,7 @@ const handleLogout = () => {
 }
 
 .dash-card {
-  background: white;
+  background-color: var(--color-surface);
   padding: 1.5rem;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.05);
@@ -242,7 +242,7 @@ const handleLogout = () => {
 
 .dash-card h3 {
   margin: 0 0 1rem 0;
-  color: #2c3e50;
+  color: var(--color-text-main);
 }
 
 .dash-card p {

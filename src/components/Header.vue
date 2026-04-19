@@ -19,14 +19,14 @@
         <router-link to="/cart" class="cart-link nav-link">
           <span class="cart-icon">🛒</span>
           <span class="cart-text">Корзина</span>
-          <span
-              class="badge"
-              :class="{ 'bump': isBumping }"
-              v-if="store.cartCount > 0"
-          >
+          <span class="badge" :class="{ 'bump': isBumping }" v-if="store.cartCount > 0">
             {{ store.cartCount }}
           </span>
         </router-link>
+
+        <button @click="store.toggleTheme" class="theme-toggle">
+          {{ store.theme === 'dark' ? '☀️' : '🌙' }}
+        </button>
       </nav>
     </div>
   </header>
@@ -196,5 +196,23 @@ watch(() => store.cartCount, (newCount, oldCount) => {
   .nav {
     gap: 1rem;
   }
+}
+
+.theme-toggle {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle:hover {
+  transform: rotate(15deg) scale(1.1);
+  background: rgba(255, 255, 255, 0.1);
 }
 </style>

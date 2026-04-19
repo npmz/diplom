@@ -45,7 +45,7 @@ const addToCart = () => {
 
 <style scoped>
 .product-card {
-  background: white;
+  background-color: var(--color-surface);
   padding: 1.5rem;
   border-radius: 8px;
   text-align: center;
@@ -73,7 +73,7 @@ const addToCart = () => {
 h3 {
   margin: 0 0 0.5rem 0;
   font-size: 1.2rem;
-  color: #2c3e50;
+  color: var(--color-text-main);
   /* Если названия слишком длинные, они могут ломать высоту карточек.
      Можно добавить многоточие для длинных текстов: */
   display: -webkit-box;
@@ -85,7 +85,7 @@ h3 {
 .price {
   font-size: 1.25rem;
   font-weight: bold;
-  color: #2c3e50;
+  color: var(--color-text-main);
   margin-bottom: 1.5rem;
   margin-top: auto; /* Прижимает цену и кнопку к низу карточки */
 }

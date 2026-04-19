@@ -115,7 +115,7 @@ const finishAndRedirect = () => {
 }
 
 .modal-content {
-  background: white;
+  background-color: var(--color-surface);
   padding: 2.5rem 2rem;
   border-radius: 12px;
   width: 100%;
@@ -209,7 +209,7 @@ input:focus {
 .success-icon {
   font-size: 4rem;
   margin-bottom: 1rem;
-  background: #e8f8f5;
+  background-color: var(--color-surface);;
   width: 100px;
   height: 100px;
   line-height: 100px;
@@ -218,7 +218,7 @@ input:focus {
 }
 
 .success-screen h2 {
-  color: #2c3e50;
+  color: var(--color-text-main);
   margin-bottom: 1rem;
 }
 

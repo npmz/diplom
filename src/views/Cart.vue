@@ -77,7 +77,7 @@ const redirectToLogin = () => {
 
 <style scoped>
 /* Ваши текущие стили для Cart.vue остаются без изменений, добавляем только один новый класс */
-.empty-cart { background: white; padding: 4rem 2rem; border-radius: 12px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-top: 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.empty-cart {background-color: var(--color-surface); padding: 4rem 2rem; border-radius: 12px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-top: 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 .empty-icon { font-size: 5rem; margin-bottom: 1rem; opacity: 0.8; animation: float 3s ease-in-out infinite; }
 @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
 .empty-cart h3 { font-size: 1.8rem; color: #2c3e50; margin: 0 0 0.5rem 0; }
@@ -88,7 +88,7 @@ const redirectToLogin = () => {
 .cart-header, .cart-item { display: grid; grid-template-columns: 3fr 120px 1fr 100px; align-items: center; gap: 1.5rem; }
 .cart-header { padding: 0 1rem 1rem 1rem; font-weight: bold; color: #7f8c8d; font-size: 0.9rem; text-transform: uppercase; border-bottom: 2px solid #ecf0f1; margin-bottom: 1rem; }
 .cart-list { list-style: none; padding: 0; position: relative; }
-.cart-item { padding: 1rem; background: white; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.cart-item { padding: 1rem; background-color: var(--color-surface); margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
 .item-name { font-weight: bold; color: #2c3e50; }
 
 .header-qty { text-align: center; }
@@ -114,7 +114,7 @@ const redirectToLogin = () => {
 .remove-btn { background: #e74c3c; color: white; border: none; padding: 0.5rem; cursor: pointer; border-radius: 4px; transition: background 0.3s; width: 100%; }
 .remove-btn:hover { background: #c0392b; }
 .cart-total { text-align: right; margin-top: 2rem; padding-top: 2rem; border-top: 2px solid #ecf0f1; }
-.cart-total h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #2c3e50; }
+.cart-total h3 { font-size: 1.5rem; margin-bottom: 1rem;color: var(--color-text-main); }
 
 .checkout-btn { background: #42b983; color: white; border: none; padding: 1rem 2rem; font-size: 1.2rem; cursor: pointer; border-radius: 5px; transition: background 0.3s; }
 .checkout-btn:hover { background: #3aa876; }

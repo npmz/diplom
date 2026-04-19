@@ -75,7 +75,7 @@ const addToCartAndClose = () => {
 }
 
 .modal-content {
-  background: white;
+  background-color: var(--color-surface);
   border-radius: 12px;
   width: 100%;
   max-width: 800px;
@@ -88,7 +88,7 @@ const addToCartAndClose = () => {
   position: absolute;
   top: 15px;
   right: 15px;
-  background: #f1f1f1;
+  background-color: var(--color-surface);
   border: none;
   font-size: 1.5rem;
   width: 35px;
@@ -103,7 +103,7 @@ const addToCartAndClose = () => {
 }
 
 .close-btn:hover {
-  background: #e0e0e0;
+  background-color: var(--color-surface);
 }
 
 .modal-body {
@@ -119,7 +119,7 @@ const addToCartAndClose = () => {
 
 .image-container {
   flex: 1;
-  background: #f8f9fa;
+  background-color: var(--color-surface);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -142,12 +142,12 @@ const addToCartAndClose = () => {
 h2 {
   margin: 0 0 0.5rem 0;
   font-size: 1.8rem;
-  color: #2c3e50;
+  color: var(--color-text-main);
 }
 
 .category-badge {
   display: inline-block;
-  background: #eee;
+  background-color: var(--color-surface);
   padding: 0.3rem 0.6rem;
   border-radius: 4px;
   font-size: 0.8rem;
@@ -166,7 +166,7 @@ h2 {
 .description-block h3, .benefits-block h3 {
   font-size: 1.1rem;
   margin-bottom: 0.5rem;
-  color: #2c3e50;
+  color: var(--color-text-main);
 }
 
 .description-block p {

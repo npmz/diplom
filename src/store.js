@@ -1,13 +1,23 @@
 import { reactive } from 'vue'
 
-// Загружаем сохраненную сессию пользователя
 const savedUser = JSON.parse(localStorage.getItem('allkeys_session') || 'null')
-
-// Загружаем сохраненную корзину
 const savedCart = JSON.parse(localStorage.getItem('allkeys_cart') || '[]')
 
+// Загружаем сохраненную тему (по умолчанию 'dark', чтобы было стильно)
+const savedTheme = localStorage.getItem('allkeys_theme') || 'dark'
+// Сразу применяем к документу при загрузке
+document.documentElement.setAttribute('data-theme', savedTheme)
+
 export const store = reactive({
-    // --- КОРЗИНА ---
+    // --- ТЕМА ---
+    theme: savedTheme,
+    toggleTheme() {
+        this.theme = this.theme === 'light' ? 'dark' : 'light'
+        localStorage.setItem('allkeys_theme', this.theme)
+        document.documentElement.setAttribute('data-theme', this.theme)
+    },
+
+    //   // ... (весь остальной ваш код корзины и профиля остается без изменений) ...
     cart: savedCart,
 
     saveCart() {

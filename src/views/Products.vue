@@ -270,7 +270,7 @@ const filteredProducts = computed(() => {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  background: white;
+  background-color: var(--color-surface);
   padding: 1.5rem;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.03);
@@ -286,6 +286,7 @@ const filteredProducts = computed(() => {
 
 /* Строка поиска с иконкой */
 .search-wrapper {
+
   position: relative;
   flex: 1;
   max-width: 400px;
@@ -327,8 +328,8 @@ const filteredProducts = computed(() => {
 .filters button {
   padding: 0.75rem 1.5rem;
   border: 2px solid #ecf0f1;
-  background: white;
-  color: #2c3e50;
+  background-color: var(--color-surface);
+  color: var(--color-text-main);
   cursor: pointer;
   border-radius: 50px;
   font-weight: bold;
@@ -352,7 +353,7 @@ const filteredProducts = computed(() => {
 .no-results {
   text-align: center;
   padding: 4rem 2rem;
-  background: white;
+  background-color: var(--color-surface);
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
@@ -371,7 +372,7 @@ const filteredProducts = computed(() => {
 
 .no-results h3 {
   font-size: 1.5rem;
-  color: #2c3e50;
+  color: var(--color-text-main);
   margin-bottom: 0.5rem;
 }
 

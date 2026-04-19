@@ -12,39 +12,22 @@
 
 <script setup>
 import Header from './components/Header.vue'
-import Footer from './components/Footer.vue' // Импорт
+import Footer from './components/Footer.vue'
 </script>
 
-<style>
-/* Эти стили гарантируют, что если на странице мало контента,
-   подвал все равно будет прижат к низу экрана. */
-html, body {
-  height: 100%;
-  margin: 0;
-}
-
-#app {
-  height: 100%;
-}
-
+<style scoped>
+/* Оставляем только то, что касается структуры самого App.vue */
 .app-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Минимальная высота - весь экран */
+  min-height: 100vh;
 }
 
 .main-content {
-  flex: 1; /* Этот блок растягивается, заполняя пустое место */
+  flex: 1;
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f4f4f9;
-  color: #333;
 }
 </style>

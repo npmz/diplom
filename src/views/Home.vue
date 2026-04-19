@@ -135,7 +135,7 @@ h1 {
 }
 
 .feature-card {
-  background: white;
+  background-color: var(--color-surface);
   padding: 2.5rem 1.5rem;
   border-radius: 12px;
   text-align: center;
@@ -155,7 +155,7 @@ h1 {
 
 .feature-card h3 {
   font-size: 1.3rem;
-  color: #2c3e50;
+  color: var(--color-text-main);
   margin-bottom: 1rem;
 }
 
