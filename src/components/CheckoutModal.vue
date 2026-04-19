@@ -184,7 +184,7 @@ input:focus {
   width: 100%;
   padding: 0.75rem;
   background: transparent;
-  color: #7f8c8d;
+  color: var(--color-text-muted);
   border: none;
   cursor: pointer;
   margin-top: 0.5rem;

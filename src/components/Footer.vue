@@ -165,7 +165,7 @@ ul li a:hover {
 }
 .bottom-container p {
   font-size: 0.85rem;
-  color: #7f8c8d;
+  color: var(--color-text-muted);
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;

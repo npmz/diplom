@@ -2,8 +2,13 @@
   <div class="products-page">
 
     <div class="catalog-header">
-      <h2>Каталог цифровых ключей</h2>
-      <p>Выбирайте лучшее. Активируйте мгновенно.</p>
+      <div class="header-content">
+        <h2>Каталог цифровых ключей</h2>
+        <p>Выбирайте лучшее. Активируйте мгновенно.</p>
+      </div>
+      <button class="btn btn-primary sell-btn" @click="openAddProduct">
+        + Продать товар
+      </button>
     </div>
 
     <div class="controls-container">
@@ -44,13 +49,24 @@
         :product="selectedProduct"
         @close="selectedProduct = null"
     />
+
+    <AddProductModal
+        v-if="showAddModal"
+        @close="showAddModal = false"
+    />
   </div>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { store } from '../store.js'
 import ProductCard from '../components/ProductCard.vue'
 import ProductModal from '../components/ProductModal.vue'
+import AddProductModal from '../components/AddProductModal.vue'
+
+const router = useRouter()
+const showAddModal = ref(false)
 
 const currentFilter = ref('All')
 const selectedProduct = ref(null)
@@ -60,7 +76,17 @@ const openProductModal = (product) => {
   selectedProduct.value = product
 }
 
-const allProducts = ref([
+const openAddProduct = () => {
+  if (store.isAuthenticated) {
+    showAddModal.value = true
+  } else {
+    alert('Чтобы продать товар, необходимо войти в аккаунт.')
+    router.push('/profile')
+  }
+}
+
+// 1. Старый allProducts переименовали в baseProducts (и убрали ref)
+const baseProducts =[
   // --- ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ (Software) ---
   {
     id: 1,
@@ -210,7 +236,10 @@ const allProducts = ref([
     price: 350,
     image: '/images/ter.jpg'
   }
-])
+]
+const allProducts = computed(() => {
+  return [...baseProducts, ...store.customProducts]
+})
 
 const setFilter = (category) => {
   currentFilter.value = category
@@ -233,7 +262,8 @@ const filteredProducts = computed(() => {
     result = result.filter(p => p.name.toLowerCase().includes(query))
   }
 
-  return result
+  // Переворачиваем массив, чтобы новые товары появлялись сверху списка
+  return result.reverse()
 })
 </script>
 
@@ -245,24 +275,61 @@ const filteredProducts = computed(() => {
 }
 
 /* --- СТИЛИ ДЛЯ ШАПКИ КАТАЛОГА --- */
+/* --- ОБНОВЛЕННАЯ ШАПКА КАТАЛОГА --- */
 .catalog-header {
-  background: linear-gradient(135deg, #1abc9c 0%, #2c3e50 100%);
-  border-radius: 12px;
+  /* Адаптивный фон: белый в светлой теме, темно-серый в темной */
+  background-color: var(--color-surface);
+
+  /* Полупрозрачный градиент в фирменных цветах поверх фона */
+  background-image: linear-gradient(135deg, rgba(66, 185, 131, 0.1) 0%, rgba(52, 152, 219, 0.1) 100%);
+
+  /* Тонкая рамка для аккуратности */
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
   padding: 3rem 2rem;
-  text-align: center;
-  color: white;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-shadow: var(--shadow-sm);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+
+  /* Плавный переход при смене темы */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.catalog-header h2 {
-  font-size: 2.5rem;
+@media (min-width: 768px) {
+  .catalog-header {
+    flex-direction: row;
+    text-align: left;
+  }
+}
+
+.header-content h2 {
+  font-size: 2.2rem;
   margin: 0 0 0.5rem 0;
+  color: var(--color-text-main); /* Автоматически меняет цвет: черный/белый */
 }
 
-.catalog-header p {
+.header-content p {
   font-size: 1.1rem;
-  opacity: 0.9;
   margin: 0;
+  color: var(--color-text-muted); /* Адаптивный серый текст */
+}
+
+/* --- КНОПКА ПРОДАЖИ --- */
+.sell-btn {
+  /* Используем главную переменную темы для кнопки */
+  background-color: var(--color-primary);
+  color: white;
+  box-shadow: 0 4px 15px rgba(66, 185, 131, 0.3);
+  white-space: nowrap; /* Чтобы кнопка не сплющивалась на мобильных */
+}
+
+.sell-btn:hover {
+  background-color: var(--color-primary-hover);
+  transform: translateY(-2px);
 }
 
 /* --- СТИЛИ ДЛЯ ПАНЕЛИ УПРАВЛЕНИЯ --- */
@@ -292,30 +359,39 @@ const filteredProducts = computed(() => {
   max-width: 400px;
 }
 
+/* --- СТРОКА ПОИСКА --- */
+.search-wrapper input {
+  width: 100%;
+  padding: 0.9rem 1rem 0.9rem 2.8rem;
+
+  /* ПРИВЯЗКА К ТЕМЕ (Фон, текст и рамка) */
+  background-color: var(--color-bg-body);
+  color: var(--color-text-main);
+  border: 2px solid var(--color-border);
+
+  border-radius: 50px;
+  font-size: 1rem;
+  transition: all 0.3s ease; /* Плавный переход при смене темы */
+  box-sizing: border-box;
+}
+
+/* Состояние при клике (фокусе) */
+.search-wrapper input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  background-color: var(--color-surface); /* Немного выделяем фон при вводе */
+  box-shadow: 0 0 0 4px rgba(66, 185, 131, 0.1);
+}
+
+/* Иконка лупы внутри поиска */
 .search-icon {
   position: absolute;
   left: 15px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 1.2rem;
-  color: #7f8c8d;
+  color: var(--color-text-muted); /* Цвет иконки под тему */
   pointer-events: none;
-}
-
-.search-wrapper input {
-  width: 100%;
-  padding: 0.9rem 1rem 0.9rem 2.8rem; /* Отступ слева для иконки */
-  border: 2px solid #ecf0f1;
-  border-radius: 50px;
-  font-size: 1rem;
-  transition: all 0.3s;
-  box-sizing: border-box;
-}
-
-.search-wrapper input:focus {
-  outline: none;
-  border-color: #42b983;
-  box-shadow: 0 0 0 4px rgba(66, 185, 131, 0.1);
 }
 
 /* Кнопки фильтров (Пилюли) */
@@ -327,7 +403,7 @@ const filteredProducts = computed(() => {
 
 .filters button {
   padding: 0.75rem 1.5rem;
-  border: 2px solid #ecf0f1;
+  border: 2px solid var(--color-border);
   background-color: var(--color-surface);
   color: var(--color-text-main);
   cursor: pointer;
@@ -338,7 +414,7 @@ const filteredProducts = computed(() => {
 }
 
 .filters button:hover {
-  border-color: #bdc3c7;
+  border-color: var(--color-primary);
   transform: translateY(-2px);
 }
 
@@ -377,7 +453,7 @@ const filteredProducts = computed(() => {
 }
 
 .no-results p {
-  color: #7f8c8d;
+  color: var(--color-text-muted);
   margin-bottom: 1.5rem;
 }
 

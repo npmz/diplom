@@ -2,14 +2,16 @@ import { reactive } from 'vue'
 
 const savedUser = JSON.parse(localStorage.getItem('allkeys_session') || 'null')
 const savedCart = JSON.parse(localStorage.getItem('allkeys_cart') || '[]')
-
-// Загружаем сохраненную тему (по умолчанию 'dark', чтобы было стильно)
 const savedTheme = localStorage.getItem('allkeys_theme') || 'dark'
-// Сразу применяем к документу при загрузке
+
+// --- НОВОЕ: Загружаем добавленные пользователями товары ---
+const savedCustomProducts = JSON.parse(localStorage.getItem('allkeys_custom_products') || '[]')
+
 document.documentElement.setAttribute('data-theme', savedTheme)
 
 export const store = reactive({
-    // --- ТЕМА ---
+    // ... (здесь остаются ваши методы темы, корзины и профиля) ...
+
     theme: savedTheme,
     toggleTheme() {
         this.theme = this.theme === 'light' ? 'dark' : 'light'
@@ -17,12 +19,26 @@ export const store = reactive({
         document.documentElement.setAttribute('data-theme', this.theme)
     },
 
-    //   // ... (весь остальной ваш код корзины и профиля остается без изменений) ...
-    cart: savedCart,
+    // --- НОВЫЙ БЛОК: ПОЛЬЗОВАТЕЛЬСКИЕ ТОВАРЫ ---
+    // --- ПОЛЬЗОВАТЕЛЬСКИЕ ТОВАРЫ ---
+    customProducts: savedCustomProducts,
 
+    addCustomProduct(product) {
+        // Добавляем флаг isCustom, чтобы отличать товар в интерфейсе
+        const newProduct = {
+            ...product,
+            id: Date.now(),
+            isCustom: true
+        }
+        this.customProducts.push(newProduct)
+        localStorage.setItem('allkeys_custom_products', JSON.stringify(this.customProducts))
+    },
+    // Ниже оставляем существующий код корзины:
+    cart: savedCart,
     saveCart() {
         localStorage.setItem('allkeys_cart', JSON.stringify(this.cart))
     },
+    // ... весь остальной код ...
 
     addToCart(product) {
         const existing = this.cart.find(item => item.id === product.id)

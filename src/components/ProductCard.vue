@@ -1,6 +1,13 @@
 <template>
   <div class="product-card" @click="$emit('openDetails', product)">
-    <img :src="product.image" :alt="product.name" />
+    <div class="image-container">
+      <img :src="product.image" :alt="product.name" />
+
+      <div v-if="product.isCustom" class="user-badge">
+        Добавлено пользователем
+      </div>
+    </div>
+
     <h3>{{ product.name }}</h3>
     <p class="price">{{ product.price }} ₽</p>
 
@@ -109,5 +116,40 @@ h3 {
 .add-btn.added {
   background-color: #27ae60;
   transform: scale(1.05);
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .image-container img {
+  transform: scale(1.1);
+}
+
+.user-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(52, 152, 219, 0.9); /* Синий цвет для пользовательских товаров */
+  color: white;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: var(--radius-sm);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 2;
 }
 </style>

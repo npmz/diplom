@@ -130,7 +130,7 @@ const handleLogout = () => {
   border: none;
   font-size: 1.1rem;
   font-weight: bold;
-  color: #7f8c8d;
+  color: var(--color-text-muted);
   cursor: pointer;
   transition: all 0.3s;
 }
@@ -222,7 +222,7 @@ const handleLogout = () => {
 }
 
 .email {
-  color: #7f8c8d;
+  color: var(--color-text-muted);
   font-size: 1.1rem;
 }
 
@@ -246,7 +246,7 @@ const handleLogout = () => {
 }
 
 .dash-card p {
-  color: #7f8c8d;
+  color: var(--color-text-muted);
   line-height: 1.5;
 }
 

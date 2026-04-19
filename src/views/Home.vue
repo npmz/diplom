@@ -160,7 +160,7 @@ h1 {
 }
 
 .feature-card p {
-  color: #7f8c8d;
+  color: var(--color-text-muted);
   line-height: 1.6;
   font-size: 0.95rem;
 }
