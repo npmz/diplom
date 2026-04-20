@@ -16,13 +16,12 @@
           👤 {{ store.isAuthenticated ? store.currentUser.name : 'Войти' }}
         </router-link>
 
-        <router-link to="/cart" class="cart-link nav-link">
-          <span class="cart-icon">🛒</span>
-          <span class="cart-text">Корзина</span>
-          <span class="badge" :class="{ 'bump': isBumping }" v-if="store.cartCount > 0">
-            {{ store.cartCount }}
+        <button class="cart-btn" @click="store.toggleCart()">
+          🛒
+          <span v-if="store.cartTotalItems > 0" class="cart-badge">
+          {{ store.cartTotalItems }}
           </span>
-        </router-link>
+        </button>
 
         <button @click="store.toggleTheme" class="theme-toggle">
           {{ store.theme === 'dark' ? '☀️' : '🌙' }}
@@ -140,24 +139,6 @@ watch(() => store.cartCount, (newCount, oldCount) => {
   color: white;
 }
 
-/* --- КОРЗИНА --- */
-.cart-link {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0.5rem 1.2rem !important;
-  border-radius: 50px;
-  transition: all 0.3s ease;
-}
-
-.cart-link:hover {
-  background: rgba(66, 185, 131, 0.2);
-}
-
-.cart-link::after {
-  display: none; /* Убираем линию под кнопкой корзины */
-}
 
 .badge {
   background: linear-gradient(45deg, #e74c3c, #ff5e57);
@@ -183,6 +164,46 @@ watch(() => store.cartCount, (newCount, oldCount) => {
 
 .badge.bump {
   animation: bump 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cart-btn {
+  position: relative; /* Важно: удерживает бейдж внутри кнопки */
+  background: transparent;
+  border: none;
+  font-size: 1.5rem; /* Размер самой иконки 🛒 */
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.cart-btn:hover {
+  transform: scale(1.1); /* Плавное увеличение при наведении */
+}
+
+/* --- КРАСНЫЙ БЕЙДЖ (СЧЕТЧИК ТОВАРОВ) --- */
+.cart-badge {
+  position: absolute;
+  top: 0px;
+  right: -5px; /* Сдвигаем немного вправо за пределы иконки */
+  background-color: var(--color-danger, #e74c3c);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 3px 6px;
+  border-radius: 50px; /* Делает бейдж круглым или овальным */
+  line-height: 1;
+  box-shadow: 0 2px 5px rgba(231, 76, 60, 0.4); /* Мягкое красное свечение */
+  pointer-events: none; /* Клики проходят сквозь бейдж на кнопку */
+  animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Анимация появления бейджа */
+@keyframes pop {
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
 }
 
 /* АДАПТИВНОСТЬ */

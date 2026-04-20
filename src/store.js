@@ -102,6 +102,54 @@ export const store = reactive({
         this.customProducts.push(newProduct)
         localStorage.setItem('allkeys_custom_products', JSON.stringify(this.customProducts))
     },
+
+    // --- УПРАВЛЕНИЕ КОРЗИНОЙ И ОКНАМИ ---
+    isCartOpen: false,
+    isCheckoutOpen: false,
+
+    toggleCart() { this.isCartOpen = !this.isCartOpen },
+
+    openCheckout() {
+        this.isCheckoutOpen = true
+        this.isCartOpen = false // Закрываем корзину при переходе к оплате
+    },
+
+    closeCheckout() { this.isCheckoutOpen = false },
+
+    // Высчитываем общее количество товаров (для бейджа в шапке)
+    get cartTotalItems() {
+        return this.cart.reduce((total, item) => total + item.quantity, 0)
+    },
+
+    // Высчитываем итоговую сумму
+    get cartTotalPrice() {
+        return this.cart.reduce((total, item) => total + (item.price * item.quantity), 0)
+    },
+
+    // Увеличение количества
+    increaseQuantity(productId) {
+        const item = this.cart.find(i => i.id === productId)
+        if (item) item.quantity++
+        this.saveCart()
+    },
+
+    // Уменьшение количества (или удаление, если остался 1)
+    decreaseQuantity(productId) {
+        const item = this.cart.find(i => i.id === productId)
+        if (item && item.quantity > 1) {
+            item.quantity--
+        } else {
+            this.removeFromCart(productId)
+        }
+        this.saveCart()
+    },
+
+    // Удаление конкретного товара из корзины
+    removeFromCart(productId) {
+        this.cart = this.cart.filter(i => i.id !== productId)
+        this.saveCart()
+    },
+
     // Ниже оставляем существующий код корзины:
     saveCart() {
         localStorage.setItem('allkeys_cart', JSON.stringify(this.cart))
@@ -115,11 +163,6 @@ export const store = reactive({
         } else {
             this.cart.push({ ...product, quantity: 1 })
         }
-        this.saveCart()
-    },
-
-    removeFromCart(productId) {
-        this.cart = this.cart.filter(item => item.id !== productId)
         this.saveCart()
     },
 

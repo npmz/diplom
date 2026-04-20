@@ -6,13 +6,18 @@
     </main>
     <Footer />
 
+    <CartDrawer /> <CheckoutModal v-if="store.isCheckoutOpen" @close="store.closeCheckout()" />
+
     <AuthPromptModal v-if="store.isAuthModalOpen" />
-    <LogoutModal v-if="store.isLogoutModalOpen" /> </div>
+    <LogoutModal v-if="store.isLogoutModalOpen" />
+  </div>
 </template>
 
 <script setup>
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
+import CartDrawer from './components/CartDrawer.vue' // ИМПОРТ
+import CheckoutModal from './components/CheckoutModal.vue' // ИМПОРТ
 import AuthPromptModal from './components/AuthPromptModal.vue'
 import LogoutModal from './components/LogoutModal.vue'
 import { store } from './store.js'
