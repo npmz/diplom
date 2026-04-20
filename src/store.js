@@ -23,6 +23,27 @@ export const store = reactive({
         return this.purchases.filter(p => p.userEmail === this.currentUser.email)
     },
 
+    // --- ТОВАРЫ ПОЛЬЗОВАТЕЛЯ НА ПРОДАЖЕ ---
+
+    // Получаем список товаров, которые продает текущий юзер
+    get userCustomProducts() {
+        if (!this.currentUser) return []
+        return this.customProducts.filter(p => p.sellerEmail === this.currentUser.email)
+    },
+
+    // Функция для удаления своего товара из каталога
+    deleteCustomProduct(productId) {
+        // Оставляем в массиве только те товары, ID которых НЕ совпадает с удаляемым
+        this.customProducts = this.customProducts.filter(p => p.id !== productId)
+
+        // Перезаписываем обновленный массив в память браузера
+        localStorage.setItem('allkeys_custom_products', JSON.stringify(this.customProducts))
+
+        // Заодно удаляем этот товар из избранного (чтобы не было "битых" ссылок)
+        this.favorites = this.favorites.filter(p => p.id !== productId)
+        localStorage.setItem('allkeys_favorites', JSON.stringify(this.favorites))
+    },
+
     confirmPurchase(cartItems) {
         if (!this.currentUser) return;
 
@@ -158,6 +179,19 @@ export const store = reactive({
         return { success: false, message: 'Неверный email или пароль.' }
     },
 
+    // --- НОВАЯ ФУНКЦИЯ ДЛЯ СБРОСА ПАРОЛЯ ---
+    resetPassword(email, newPassword) {
+        const users = JSON.parse(localStorage.getItem('allkeys_users') || '[]')
+        const userIndex = users.findIndex(u => u.email === email)
+
+        if (userIndex > -1) {
+            users[userIndex].password = newPassword
+            localStorage.setItem('allkeys_users', JSON.stringify(users))
+            return { success: true }
+        }
+        return { success: false, message: 'Пользователь с таким email не найден.' }
+    },
+
     // --- ОБНОВЛЕННЫЙ МЕТОД ВЫХОДА ---
     logoutUser() {
         this.currentUser = null
@@ -169,12 +203,12 @@ export const store = reactive({
 
     // --- УПРАВЛЕНИЕ ГЛОБАЛЬНЫМИ ОКНАМИ ---
     isAuthModalOpen: false,
+    isLogoutModalOpen: false, // Состояние для окна выхода
 
-    openAuthModal() {
-        this.isAuthModalOpen = true;
-    },
+    openAuthModal() { this.isAuthModalOpen = true; },
+    closeAuthModal() { this.isAuthModalOpen = false; },
 
-    closeAuthModal() {
-        this.isAuthModalOpen = false;
-    },
+    // Функции для окна выхода
+    openLogoutModal() { this.isLogoutModalOpen = true; },
+    closeLogoutModal() { this.isLogoutModalOpen = false; },
 })

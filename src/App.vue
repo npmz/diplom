@@ -1,22 +1,21 @@
 <template>
   <div class="app-container">
     <Header />
-
     <main class="main-content">
       <router-view />
     </main>
-
     <Footer />
 
     <AuthPromptModal v-if="store.isAuthModalOpen" />
-  </div>
+    <LogoutModal v-if="store.isLogoutModalOpen" /> </div>
 </template>
 
 <script setup>
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
-import AuthPromptModal from './components/AuthPromptModal.vue' // ИМПОРТ
-import { store } from './store.js' // ИМПОРТ STORE
+import AuthPromptModal from './components/AuthPromptModal.vue'
+import LogoutModal from './components/LogoutModal.vue'
+import { store } from './store.js'
 </script>
 
 <style scoped>

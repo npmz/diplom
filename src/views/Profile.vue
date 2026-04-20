@@ -15,6 +15,9 @@
         <button :class="{ active: activeTab === 'favorites' }" @click="activeTab = 'favorites'">
           ❤️ Избранное ({{ store.favorites.length }})
         </button>
+        <button :class="{ active: activeTab === 'my-products' }" @click="activeTab = 'my-products'">
+          🏪 Мои товары ({{ store.userCustomProducts.length }})
+        </button>
       </div>
 
       <div class="tab-content">
@@ -48,9 +51,40 @@
             <ProductCard v-for="p in store.favorites" :key="p.id" :product="p" />
           </div>
         </div>
+
+        <div v-if="activeTab === 'my-products'" class="dash-card surface-box">
+
+          <div v-if="store.userCustomProducts.length === 0" class="empty-state">
+            <p>Вы еще не выставили ни одного товара на продажу.</p>
+            <router-link to="/products" class="btn btn-primary" style="margin-top: 1rem; display: inline-block;">
+              Разместить товар
+            </router-link>
+          </div>
+
+          <div v-else class="purchases-list">
+            <div v-for="item in store.userCustomProducts" :key="item.id" class="purchase-item">
+              <img :src="item.image" class="purchase-img" />
+              <div class="purchase-info">
+                <h4>{{ item.name }}</h4>
+                <p class="purchase-date">Категория: {{ item.category }}</p>
+                <div class="qty-badge" style="margin-left: 0; margin-top: 0.5rem; display: inline-block;">
+                  Осталось ключей: {{ item.keysAvailable }}
+                </div>
+              </div>
+              <div class="purchase-price">{{ item.price }} ₽</div>
+
+              <button @click="confirmDeleteProduct(item.id)" class="btn-delete" title="Снять с продажи">
+                🗑️ Удалить
+              </button>
+            </div>
+          </div>
+
+        </div>
       </div>
 
-      <button @click="store.logoutUser()" class="logout-btn">Выйти из аккаунта</button>
+      <button @click="store.openLogoutModal()" class="logout-btn">
+        Выйти из аккаунта
+      </button>
     </div>
 
     <div v-else class="auth-wrapper">
@@ -86,7 +120,7 @@
 
           <div class="form-options">
             <label class="remember-me"><input type="checkbox"> Запомнить меня</label>
-            <a href="#" class="forgot-password">Забыли пароль?</a>
+            <a href="#" class="forgot-password" @click.prevent="showResetModal = true">Забыли пароль?</a>
           </div>
 
           <button type="submit" class="btn btn-primary w-100">Войти в аккаунт</button>
@@ -111,6 +145,15 @@
 
       </div>
     </div>
+    <ResetPasswordModal
+        v-if="showResetModal"
+        @close="showResetModal = false"
+    />
+    <ConfirmDeleteModal
+        v-if="showDeleteModal"
+        @confirm="executeDelete"
+        @cancel="showDeleteModal = false"
+    />
   </div>
 </template>
 
@@ -118,14 +161,32 @@
 import { ref, reactive } from 'vue'
 import { store } from '../store.js'
 import ProductCard from '../components/ProductCard.vue'
+import ResetPasswordModal from '../components/ResetPasswordModal.vue'
+import ConfirmDeleteModal from '../components/ConfirmDeleteModal.vue'
 
 const activeTab = ref('purchases') // Текущая активная вкладка
-
 const isLoginTab = ref(true)
 const errorMessage = ref('')
-
+const showResetModal = ref(false)
 const loginData = reactive({ email: '', password: '' })
 const registerData = reactive({ name: '', email: '', password: '' })
+const showDeleteModal = ref(false)
+const productToDelete = ref(null)
+
+// Функция, которая только открывает окно и запоминает ID
+const confirmDeleteProduct = (productId) => {
+  productToDelete.value = productId
+  showDeleteModal.value = true
+}
+
+// Функция, которая реально удаляет (вызывается из модалки)
+const executeDelete = () => {
+  if (productToDelete.value) {
+    store.deleteCustomProduct(productToDelete.value)
+    showDeleteModal.value = false
+    productToDelete.value = null // Очищаем память
+  }
+}
 
 const handleLogin = () => {
   errorMessage.value = ''
@@ -638,5 +699,37 @@ const handleLogout = () => {
 
 .tab-content {
   margin-bottom: 1rem;
+}
+
+/* Фикс: чтобы 3 вкладки хорошо смотрелись на мобильных экранах */
+.profile-tabs {
+  display: flex;
+  flex-wrap: wrap; /* Позволяет переноситься на новую строку */
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+.profile-tabs button {
+  padding: 0.8rem;
+  font-size: 0.95rem;
+}
+
+/* Кнопка удаления товара */
+.btn-delete {
+  background: rgba(231, 76, 60, 0.1);
+  color: var(--color-danger);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s;
+  margin-left: 1rem;
+}
+
+.btn-delete:hover {
+  background: var(--color-danger);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(231, 76, 60, 0.2);
 }
 </style>
