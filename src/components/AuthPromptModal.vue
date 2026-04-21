@@ -26,8 +26,8 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const goToLogin = () => {
-  store.closeAuthModal() // Закрываем окно
-  router.push('/profile') // Перенаправляем на красивую форму входа
+  store.closeAuthModal()
+  router.push('/profile')
 }
 </script>
 
@@ -43,7 +43,7 @@ const goToLogin = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 3000; /* Должно быть поверх всего */
+  z-index: 3000;
   padding: 1rem;
 }
 

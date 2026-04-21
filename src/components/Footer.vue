@@ -60,7 +60,7 @@
   background-color: #1a252f;
   color: #ecf0f1;
   padding-top: 4rem;
-  margin-top: auto; /* Прижимает подвал к низу страницы */
+  margin-top: auto;
 }
 
 .footer-container {
@@ -72,7 +72,6 @@
   gap: 3rem;
 }
 
-/* Стили логотипа в подвале */
 .logo {
   display: flex;
   align-items: center;
@@ -94,7 +93,6 @@
   margin-bottom: 1.5rem;
 }
 
-/* Заголовки секций */
 h4 {
   color: white;
   margin-bottom: 1.5rem;
@@ -111,7 +109,6 @@ h4::after {
   background-color: #42b983;
 }
 
-/* Списки ссылок */
 ul {
   list-style: none;
   padding: 0;
@@ -130,7 +127,6 @@ ul li a:hover {
   padding-left: 5px;
 }
 
-/* Соцсети и платежи */
 .social-links {
   display: flex;
   gap: 1rem;
@@ -156,7 +152,6 @@ ul li a:hover {
   filter: grayscale(0);
 }
 
-/* Копирайт панель */
 .footer-bottom {
   background-color: #141d26;
   padding: 1.5rem 0;
@@ -171,7 +166,6 @@ ul li a:hover {
   padding: 0 2rem;
 }
 
-/* АДАПТИВНОСТЬ */
 @media (max-width: 992px) {
   .footer-container {
     grid-template-columns: 1fr 1fr;

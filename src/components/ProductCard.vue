@@ -36,23 +36,19 @@ const handleFavoriteClick = () => {
   if (store.isAuthenticated) {
     store.toggleFavorite(props.product)
   } else {
-    // ВЫЗЫВАЕМ КРАСИВОЕ ОКНО ВМЕСТО ALERT
     store.openAuthModal()
   }
 }
 
 defineEmits(['openDetails'])
 
-// Состояние кнопки (нажата или нет)
 const isAdded = ref(false)
 
 const addToCart = () => {
   store.addToCart(props.product)
 
-  // Включаем анимацию
   isAdded.value = true
 
-  // Выключаем через 1 секунду
   setTimeout(() => {
     isAdded.value = false
   }, 1000)
@@ -60,7 +56,6 @@ const addToCart = () => {
 </script>
 
 <style scoped>
-/* Добавьте стили для кнопки избранного */
 .favorite-btn {
   position: absolute;
   top: 10px;
@@ -97,8 +92,8 @@ const addToCart = () => {
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
-  display: flex; /* Делаем карточку флекс-контейнером */
-  flex-direction: column; /* Элементы идут сверху вниз */
+  display: flex;
+  flex-direction: column;
 }
 
 .product-card:hover {
@@ -106,21 +101,18 @@ const addToCart = () => {
   box-shadow: 0 8px 15px rgba(0,0,0,0.15);
 }
 
-/* --- НОВЫЕ СТИЛИ ДЛЯ КАРТИНОК --- */
 .product-card img {
-  width: 100%; /* Картинка занимает всю ширину карточки */
-  height: 200px; /* Жестко задаем одинаковую высоту для всех */
-  object-fit: cover; /* Сохраняет пропорции, обрезая лишнее */
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
   border-radius: 4px;
-  margin-bottom: 1rem; /* Отступ снизу до названия */
+  margin-bottom: 1rem;
 }
 
 h3 {
   margin: 0 0 0.5rem 0;
   font-size: 1.2rem;
   color: var(--color-text-main);
-  /* Если названия слишком длинные, они могут ломать высоту карточек.
-     Можно добавить многоточие для длинных текстов: */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -132,7 +124,7 @@ h3 {
   font-weight: bold;
   color: var(--color-text-main);
   margin-bottom: 1.5rem;
-  margin-top: auto; /* Прижимает цену и кнопку к низу карточки */
+  margin-top: auto;
 }
 
 .add-btn {
@@ -180,7 +172,7 @@ h3 {
   position: absolute;
   top: 10px;
   left: 10px;
-  background: rgba(52, 152, 219, 0.9); /* Синий цвет для пользовательских товаров */
+  background: rgba(52, 152, 219, 0.9);
   color: white;
   padding: 4px 10px;
   font-size: 0.75rem;

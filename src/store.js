@@ -17,29 +17,21 @@ export const store = reactive({
     purchases: savedPurchases,
     favorites: savedFavorites,
 
-    // Геттер для получения покупок именно текущего пользователя
     get userPurchases() {
         if (!this.currentUser) return []
         return this.purchases.filter(p => p.userEmail === this.currentUser.email)
     },
 
-    // --- ТОВАРЫ ПОЛЬЗОВАТЕЛЯ НА ПРОДАЖЕ ---
-
-    // Получаем список товаров, которые продает текущий юзер
     get userCustomProducts() {
         if (!this.currentUser) return []
         return this.customProducts.filter(p => p.sellerEmail === this.currentUser.email)
     },
 
-    // Функция для удаления своего товара из каталога
     deleteCustomProduct(productId) {
-        // Оставляем в массиве только те товары, ID которых НЕ совпадает с удаляемым
         this.customProducts = this.customProducts.filter(p => p.id !== productId)
 
-        // Перезаписываем обновленный массив в память браузера
         localStorage.setItem('allkeys_custom_products', JSON.stringify(this.customProducts))
 
-        // Заодно удаляем этот товар из избранного (чтобы не было "битых" ссылок)
         this.favorites = this.favorites.filter(p => p.id !== productId)
         localStorage.setItem('allkeys_favorites', JSON.stringify(this.favorites))
     },
@@ -61,7 +53,7 @@ export const store = reactive({
             quantity: item.quantity,
             image: item.image,
             date: new Date().toLocaleDateString(),
-            userEmail: this.currentUser.email, // КРИТИЧНО: привязка к текущему юзеру
+            userEmail: this.currentUser.email,
             keys: Array.from({length: item.quantity}, () => generateRandomKey())
         }))
 
@@ -73,10 +65,8 @@ export const store = reactive({
     toggleFavorite(product) {
         const index = this.favorites.findIndex(p => p.id === product.id)
         if (index > -1) {
-            // Если уже в избранном — удаляем
             this.favorites.splice(index, 1)
         } else {
-            // Если нет — добавляем
             this.favorites.push(product)
         }
         localStorage.setItem('allkeys_favorites', JSON.stringify(this.favorites))
@@ -93,7 +83,6 @@ export const store = reactive({
     },
 
     addCustomProduct(product) {
-        // Добавляем флаг isCustom, чтобы отличать товар в интерфейсе
         const newProduct = {
             ...product,
             id: Date.now(),
@@ -103,7 +92,6 @@ export const store = reactive({
         localStorage.setItem('allkeys_custom_products', JSON.stringify(this.customProducts))
     },
 
-    // --- УПРАВЛЕНИЕ КОРЗИНОЙ И ОКНАМИ ---
     isCartOpen: false,
     isCheckoutOpen: false,
 
@@ -111,29 +99,25 @@ export const store = reactive({
 
     openCheckout() {
         this.isCheckoutOpen = true
-        this.isCartOpen = false // Закрываем корзину при переходе к оплате
+        this.isCartOpen = false
     },
 
     closeCheckout() { this.isCheckoutOpen = false },
 
-    // Высчитываем общее количество товаров (для бейджа в шапке)
     get cartTotalItems() {
         return this.cart.reduce((total, item) => total + item.quantity, 0)
     },
 
-    // Высчитываем итоговую сумму
     get cartTotalPrice() {
         return this.cart.reduce((total, item) => total + (item.price * item.quantity), 0)
     },
 
-    // Увеличение количества
     increaseQuantity(productId) {
         const item = this.cart.find(i => i.id === productId)
         if (item) item.quantity++
         this.saveCart()
     },
 
-    // Уменьшение количества (или удаление, если остался 1)
     decreaseQuantity(productId) {
         const item = this.cart.find(i => i.id === productId)
         if (item && item.quantity > 1) {
@@ -143,18 +127,14 @@ export const store = reactive({
         }
         this.saveCart()
     },
-
-    // Удаление конкретного товара из корзины
     removeFromCart(productId) {
         this.cart = this.cart.filter(i => i.id !== productId)
         this.saveCart()
     },
 
-    // Ниже оставляем существующий код корзины:
     saveCart() {
         localStorage.setItem('allkeys_cart', JSON.stringify(this.cart))
     },
-    // ... весь остальной код ...
 
     addToCart(product) {
         const existing = this.cart.find(item => item.id === product.id)
@@ -191,8 +171,6 @@ export const store = reactive({
         return this.cart.reduce((count, item) => count + item.quantity, 0)
     },
 
-    // --- АВТОРИЗАЦИЯ И ПРОФИЛЬ ---
-
     get isAuthenticated() {
         return this.currentUser !== null
     },
@@ -222,7 +200,7 @@ export const store = reactive({
         return { success: false, message: 'Неверный email или пароль.' }
     },
 
-    // --- НОВАЯ ФУНКЦИЯ ДЛЯ СБРОСА ПАРОЛЯ ---
+
     resetPassword(email, newPassword) {
         const users = JSON.parse(localStorage.getItem('allkeys_users') || '[]')
         const userIndex = users.findIndex(u => u.email === email)
@@ -235,23 +213,19 @@ export const store = reactive({
         return { success: false, message: 'Пользователь с таким email не найден.' }
     },
 
-    // --- ОБНОВЛЕННЫЙ МЕТОД ВЫХОДА ---
     logoutUser() {
         this.currentUser = null
         localStorage.removeItem('allkeys_session')
 
-        // Очищаем корзину при выходе
         this.clearCart()
     },
 
-    // --- УПРАВЛЕНИЕ ГЛОБАЛЬНЫМИ ОКНАМИ ---
     isAuthModalOpen: false,
-    isLogoutModalOpen: false, // Состояние для окна выхода
+    isLogoutModalOpen: false,
 
     openAuthModal() { this.isAuthModalOpen = true; },
     closeAuthModal() { this.isAuthModalOpen = false; },
 
-    // Функции для окна выхода
     openLogoutModal() { this.isLogoutModalOpen = true; },
     closeLogoutModal() { this.isLogoutModalOpen = false; },
 })

@@ -81,23 +81,19 @@ const verifyEmail = () => {
 }
 
 const saveNewPassword = () => {
-  // ПРОВЕРКА 1: Совпадают ли введенные пароли?
   if (newPassword.value !== confirmPassword.value) {
     error.value = 'Пароли не совпадают. Попробуйте еще раз.'
     return
   }
 
-  // Получаем данные пользователя для проверки старого пароля
   const users = JSON.parse(localStorage.getItem('allkeys_users') || '[]')
   const userAccount = users.find(u => u.email === email.value)
 
-  // ПРОВЕРКА 2: Совпадает ли новый пароль с текущим?
   if (userAccount && userAccount.password === newPassword.value) {
     error.value = 'Новый пароль не должен совпадать с текущим.'
     return
   }
 
-  // Если все проверки пройдены, сохраняем новый пароль
   error.value = ''
   store.resetPassword(email.value, newPassword.value)
   step.value = 3
@@ -105,7 +101,6 @@ const saveNewPassword = () => {
 </script>
 
 <style scoped>
-/* Стили остаются прежними, изменения только в структуре и логике */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -166,18 +161,69 @@ const saveNewPassword = () => {
   background: rgba(66, 185, 131, 0.1);
 }
 
-h2 { color: var(--color-text-main); margin-bottom: 0.5rem; }
-.desc { color: var(--color-text-muted); line-height: 1.5; margin-bottom: 1.5rem; font-size: 0.95rem; }
+h2 {
+  color: var(--color-text-main);
+  margin-bottom: 0.5rem;
+}
+.desc {
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
 
-.reset-form { display: flex; flex-direction: column; gap: 1rem; }
+.reset-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 
-.input-group { position: relative; text-align: left; }
-.input-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); font-size: 1.2rem; color: var(--color-text-muted); pointer-events: none; }
-.input-group input { width: 100%; padding: 1rem 1rem 1rem 3rem; background: var(--color-bg-body); border: 2px solid transparent; color: var(--color-text-main); border-radius: var(--radius-md); font-size: 1rem; transition: all 0.3s ease; }
-.input-group input:focus { outline: none; border-color: var(--color-primary); background: var(--color-surface); box-shadow: 0 0 0 4px rgba(66, 185, 131, 0.1); }
+.input-group {
+  position: relative;
+  text-align: left;
+}
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+.input-group input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  background: var(--color-bg-body);
+  border: 2px solid transparent;
+  color: var(--color-text-main);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+.input-group input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  background: var(--color-surface);
+  box-shadow: 0 0 0 4px rgba(66, 185, 131, 0.1);
+}
 
-.error-msg { background: rgba(231, 76, 60, 0.1); color: var(--color-danger); padding: 0.8rem; border-radius: var(--radius-md); margin-bottom: 1rem; font-size: 0.9rem; font-weight: bold; }
-.w-100 { width: 100%; }
-.fade-enter-active, .fade-leave-active { transition: opacity 0.3s; }
-.fade-enter-from, .fade-leave-to { opacity: 0; }
+.error-msg {
+  background: rgba(231, 76, 60, 0.1);
+  color: var(--color-danger);
+  padding: 0.8rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.w-100 {
+  width: 100%;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
 </style>

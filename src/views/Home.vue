@@ -76,10 +76,8 @@ const router = useRouter()
 
 const handleSellClick = () => {
   if (store.isAuthenticated) {
-    // Если авторизован — отправляем в каталог, где он сможет нажать "Продать"
     router.push('/products')
   } else {
-    // Если не авторизован — открываем наше новое глобальное окно
     store.openAuthModal()
   }
 }
@@ -93,7 +91,6 @@ const handleSellClick = () => {
   padding-bottom: 2rem;
 }
 
-/* --- HERO SECTION --- */
 .hero {
   display: flex;
   align-items: center;
@@ -131,7 +128,6 @@ const handleSellClick = () => {
   line-height: 1.6;
 }
 
-/* Анимация иконок на главном экране */
 .hero-graphics {
   position: relative;
   width: 300px;
@@ -169,7 +165,6 @@ const handleSellClick = () => {
   100% { transform: translateY(0px) rotate(0deg); }
 }
 
-/* --- SELLER BANNER --- */
 .seller-banner {
   width: 100%;
 }
@@ -298,7 +293,6 @@ const handleSellClick = () => {
   color: var(--color-text-muted);
 }
 
-/* --- FEATURES GRID --- */
 .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -334,7 +328,6 @@ const handleSellClick = () => {
   line-height: 1.6;
 }
 
-/* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
   .hero {
     padding: 2rem;

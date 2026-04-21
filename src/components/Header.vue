@@ -37,7 +37,6 @@ import { store } from '../store.js'
 
 const isBumping = ref(false)
 
-// Анимация счетчика при добавлении товара
 watch(() => store.cartCount, (newCount, oldCount) => {
   if (newCount > oldCount) {
     isBumping.value = true
@@ -50,7 +49,6 @@ watch(() => store.cartCount, (newCount, oldCount) => {
 
 <style scoped>
 .header {
-  /* ЭФФЕКТ СТЕКЛА (Glassmorphism) */
   background: rgba(44, 62, 80, 0.95);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -72,7 +70,6 @@ watch(() => store.cartCount, (newCount, oldCount) => {
   align-items: center;
 }
 
-/* --- СТИЛИ ЛОГОТИПА --- */
 .logo a {
   display: flex;
   align-items: center;
@@ -97,7 +94,6 @@ watch(() => store.cartCount, (newCount, oldCount) => {
   -webkit-text-fill-color: transparent;
 }
 
-/* --- НАВИГАЦИЯ И ССЫЛКИ --- */
 .nav {
   display: flex;
   align-items: center;
@@ -118,7 +114,6 @@ watch(() => store.cartCount, (newCount, oldCount) => {
   color: #42b983;
 }
 
-/* Анимированная линия под ссылкой */
 .nav-link::after {
   content: '';
   position: absolute;
@@ -155,7 +150,6 @@ watch(() => store.cartCount, (newCount, oldCount) => {
   box-shadow: 0 2px 10px rgba(231, 76, 60, 0.4);
 }
 
-/* --- АНИМАЦИЯ --- */
 @keyframes bump {
   0% { transform: scale(1); }
   50% { transform: scale(1.3); }
@@ -167,10 +161,10 @@ watch(() => store.cartCount, (newCount, oldCount) => {
 }
 
 .cart-btn {
-  position: relative; /* Важно: удерживает бейдж внутри кнопки */
+  position: relative;
   background: transparent;
   border: none;
-  font-size: 1.5rem; /* Размер самой иконки 🛒 */
+  font-size: 1.5rem;
   cursor: pointer;
   padding: 0.5rem;
   display: flex;
@@ -180,39 +174,39 @@ watch(() => store.cartCount, (newCount, oldCount) => {
 }
 
 .cart-btn:hover {
-  transform: scale(1.1); /* Плавное увеличение при наведении */
+  transform: scale(1.1);
 }
 
-/* --- КРАСНЫЙ БЕЙДЖ (СЧЕТЧИК ТОВАРОВ) --- */
+
 .cart-badge {
   position: absolute;
   top: 0px;
-  right: -5px; /* Сдвигаем немного вправо за пределы иконки */
+  right: -5px;
   background-color: var(--color-danger, #e74c3c);
   color: white;
   font-size: 0.75rem;
   font-weight: bold;
   padding: 3px 6px;
-  border-radius: 50px; /* Делает бейдж круглым или овальным */
+  border-radius: 50px;
   line-height: 1;
-  box-shadow: 0 2px 5px rgba(231, 76, 60, 0.4); /* Мягкое красное свечение */
-  pointer-events: none; /* Клики проходят сквозь бейдж на кнопку */
+  box-shadow: 0 2px 5px rgba(231, 76, 60, 0.4);
+  pointer-events: none;
   animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Анимация появления бейджа */
+
 @keyframes pop {
   0% { transform: scale(0); }
   100% { transform: scale(1); }
 }
 
-/* АДАПТИВНОСТЬ */
+
 @media (max-width: 600px) {
   .header-container {
     padding: 0 1rem;
   }
   .cart-text {
-    display: none; /* Прячем текст на мобильных, оставляем иконку */
+    display: none;
   }
   .nav {
     gap: 1rem;

@@ -164,7 +164,7 @@ import ProductCard from '../components/ProductCard.vue'
 import ResetPasswordModal from '../components/ResetPasswordModal.vue'
 import ConfirmDeleteModal from '../components/ConfirmDeleteModal.vue'
 
-const activeTab = ref('purchases') // Текущая активная вкладка
+const activeTab = ref('purchases')
 const isLoginTab = ref(true)
 const errorMessage = ref('')
 const showResetModal = ref(false)
@@ -173,18 +173,16 @@ const registerData = reactive({ name: '', email: '', password: '' })
 const showDeleteModal = ref(false)
 const productToDelete = ref(null)
 
-// Функция, которая только открывает окно и запоминает ID
 const confirmDeleteProduct = (productId) => {
   productToDelete.value = productId
   showDeleteModal.value = true
 }
 
-// Функция, которая реально удаляет (вызывается из модалки)
 const executeDelete = () => {
   if (productToDelete.value) {
     store.deleteCustomProduct(productToDelete.value)
     showDeleteModal.value = false
-    productToDelete.value = null // Очищаем память
+    productToDelete.value = null
   }
 }
 
@@ -194,7 +192,6 @@ const handleLogin = () => {
   if (!result.success) {
     errorMessage.value = result.message
   } else {
-    // Очистка формы
     loginData.email = ''
     loginData.password = ''
   }
@@ -251,16 +248,16 @@ const handleLogout = () => {
   border-radius: var(--radius-lg);
 }
 
-/* Сетка для избранного — такая же как в каталоге */
+
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 2rem;
 }
-/* Добавьте эти стили для красивого списка покупок */
+
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr; /* Покупки шире, чем настройки */
+  grid-template-columns: 2fr 1fr;
   gap: 2rem;
   margin-bottom: 2rem;
 }
@@ -349,8 +346,6 @@ const handleLogout = () => {
   padding: 2rem 0;
 }
 
-/* --- СТИЛИ АВТОРИЗАЦИИ --- */
-/* --- ОБНОВЛЕННАЯ СТРАНИЦА АВТОРИЗАЦИИ --- */
 .auth-wrapper {
   display: flex;
   justify-content: center;
@@ -368,7 +363,6 @@ const handleLogout = () => {
   text-align: center;
 }
 
-/* Приветствие */
 .logo-circle {
   font-size: 3rem;
   background: rgba(66, 185, 131, 0.1);
@@ -392,7 +386,6 @@ const handleLogout = () => {
   margin-bottom: 2rem;
 }
 
-/* Современные вкладки-пилюли */
 .auth-tabs-modern {
   display: flex;
   position: relative;
@@ -437,7 +430,7 @@ const handleLogout = () => {
   color: var(--color-text-main);
 }
 
-/* Поля ввода с иконками */
+
 .auth-form {
   display: flex;
   flex-direction: column;
@@ -456,12 +449,12 @@ const handleLogout = () => {
   transform: translateY(-50%);
   font-size: 1.2rem;
   color: var(--color-text-muted);
-  pointer-events: none; /* Чтобы клик проходил сквозь иконку на инпут */
+  pointer-events: none;
 }
 
 .input-group input {
   width: 100%;
-  padding: 1rem 1rem 1rem 3rem; /* Отступ слева для иконки */
+  padding: 1rem 1rem 1rem 3rem;
   background: var(--color-bg-body);
   border: 2px solid transparent;
   color: var(--color-text-main);
@@ -477,7 +470,6 @@ const handleLogout = () => {
   box-shadow: 0 0 0 4px rgba(66, 185, 131, 0.1);
 }
 
-/* Опции под паролем (Запомнить / Забыли) */
 .form-options {
   display: flex;
   justify-content: space-between;
@@ -507,7 +499,6 @@ const handleLogout = () => {
   text-decoration: underline;
 }
 
-/* Ошибки и утилиты */
 .error-msg {
   background: rgba(231, 76, 60, 0.1);
   color: var(--color-danger);
@@ -591,7 +582,7 @@ const handleLogout = () => {
   border-bottom: 1px solid #ecf0f1;
 }
 
-/* --- СТИЛИ КАБИНЕТА --- */
+
 .dashboard {
   width: 100%;
   max-width: 800px;
@@ -664,7 +655,7 @@ const handleLogout = () => {
   color: white;
 }
 
-/* --- СТИЛИ ДЛЯ КЛЮЧЕЙ И КОЛИЧЕСТВА --- */
+
 .qty-badge {
   color: var(--color-primary);
   font-size: 0.85rem;
@@ -677,7 +668,7 @@ const handleLogout = () => {
 .keys-container {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem; /* Отступ между ключами, если их несколько */
+  gap: 0.5rem;
   margin-top: 0.5rem;
 }
 
@@ -687,7 +678,7 @@ const handleLogout = () => {
   border-radius: var(--radius-sm);
   display: inline-block;
   border: 1px dashed var(--color-primary);
-  width: fit-content; /* Чтобы рамка облегала сам ключ */
+  width: fit-content;
 }
 
 .key-box code {
@@ -701,10 +692,9 @@ const handleLogout = () => {
   margin-bottom: 1rem;
 }
 
-/* Фикс: чтобы 3 вкладки хорошо смотрелись на мобильных экранах */
 .profile-tabs {
   display: flex;
-  flex-wrap: wrap; /* Позволяет переноситься на новую строку */
+  flex-wrap: wrap;
   gap: 0.5rem;
   padding: 0.5rem;
 }
@@ -713,7 +703,6 @@ const handleLogout = () => {
   font-size: 0.95rem;
 }
 
-/* Кнопка удаления товара */
 .btn-delete {
   background: rgba(231, 76, 60, 0.1);
   color: var(--color-danger);

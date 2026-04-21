@@ -25,9 +25,9 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const handleConfirmLogout = () => {
-  store.logoutUser() // Вызываем сам выход (очистка сессии и корзины)
-  store.closeLogoutModal() // Закрываем окно
-  router.push('/') // Перенаправляем на главную
+  store.logoutUser()
+  store.closeLogoutModal()
+  router.push('/')
 }
 </script>
 

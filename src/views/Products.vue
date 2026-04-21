@@ -84,9 +84,7 @@ const openAddProduct = () => {
   }
 }
 
-// 1. Старый allProducts переименовали в baseProducts (и убрали ref)
 const baseProducts =[
-  // --- ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ (Software) ---
   {
     id: 1,
     name: 'Windows 11 Pro (OEM)',
@@ -147,7 +145,6 @@ const baseProducts =[
     image: '/images/aee.png'
   },
 
-  // --- ИГРЫ (Games) ---
   {
     id: 9,
     name: 'Cyberpunk 2077 (Steam)',
@@ -261,7 +258,6 @@ const filteredProducts = computed(() => {
     result = result.filter(p => p.name.toLowerCase().includes(query))
   }
 
-  // Переворачиваем массив, чтобы новые товары появлялись сверху списка
   return result.reverse()
 })
 </script>
@@ -273,16 +269,11 @@ const filteredProducts = computed(() => {
   gap: 2rem;
 }
 
-/* --- СТИЛИ ДЛЯ ШАПКИ КАТАЛОГА --- */
-/* --- ОБНОВЛЕННАЯ ШАПКА КАТАЛОГА --- */
 .catalog-header {
-  /* Адаптивный фон: белый в светлой теме, темно-серый в темной */
   background-color: var(--color-surface);
 
-  /* Полупрозрачный градиент в фирменных цветах поверх фона */
   background-image: linear-gradient(135deg, rgba(66, 185, 131, 0.1) 0%, rgba(52, 152, 219, 0.1) 100%);
 
-  /* Тонкая рамка для аккуратности */
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   padding: 3rem 2rem;
@@ -294,7 +285,6 @@ const filteredProducts = computed(() => {
   justify-content: space-between;
   gap: 1.5rem;
 
-  /* Плавный переход при смене темы */
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
@@ -308,22 +298,20 @@ const filteredProducts = computed(() => {
 .header-content h2 {
   font-size: 2.2rem;
   margin: 0 0 0.5rem 0;
-  color: var(--color-text-main); /* Автоматически меняет цвет: черный/белый */
+  color: var(--color-text-main);
 }
 
 .header-content p {
   font-size: 1.1rem;
   margin: 0;
-  color: var(--color-text-muted); /* Адаптивный серый текст */
+  color: var(--color-text-muted);
 }
 
-/* --- КНОПКА ПРОДАЖИ --- */
 .sell-btn {
-  /* Используем главную переменную темы для кнопки */
   background-color: var(--color-primary);
   color: white;
   box-shadow: 0 4px 15px rgba(66, 185, 131, 0.3);
-  white-space: nowrap; /* Чтобы кнопка не сплющивалась на мобильных */
+  white-space: nowrap;
 }
 
 .sell-btn:hover {
@@ -331,7 +319,6 @@ const filteredProducts = computed(() => {
   transform: translateY(-2px);
 }
 
-/* --- СТИЛИ ДЛЯ ПАНЕЛИ УПРАВЛЕНИЯ --- */
 .controls-container {
   display: flex;
   flex-direction: column;
@@ -350,7 +337,6 @@ const filteredProducts = computed(() => {
   }
 }
 
-/* Строка поиска с иконкой */
 .search-wrapper {
 
   position: relative;
@@ -358,42 +344,38 @@ const filteredProducts = computed(() => {
   max-width: 400px;
 }
 
-/* --- СТРОКА ПОИСКА --- */
 .search-wrapper input {
   width: 100%;
   padding: 0.9rem 1rem 0.9rem 2.8rem;
 
-  /* ПРИВЯЗКА К ТЕМЕ (Фон, текст и рамка) */
   background-color: var(--color-bg-body);
   color: var(--color-text-main);
   border: 2px solid var(--color-border);
 
   border-radius: 50px;
   font-size: 1rem;
-  transition: all 0.3s ease; /* Плавный переход при смене темы */
+  transition: all 0.3s ease;
   box-sizing: border-box;
 }
 
-/* Состояние при клике (фокусе) */
 .search-wrapper input:focus {
   outline: none;
   border-color: var(--color-primary);
-  background-color: var(--color-surface); /* Немного выделяем фон при вводе */
+  background-color: var(--color-surface);
   box-shadow: 0 0 0 4px rgba(66, 185, 131, 0.1);
 }
 
-/* Иконка лупы внутри поиска */
+
 .search-icon {
   position: absolute;
   left: 15px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 1.2rem;
-  color: var(--color-text-muted); /* Цвет иконки под тему */
+  color: var(--color-text-muted);
   pointer-events: none;
 }
 
-/* Кнопки фильтров (Пилюли) */
 .filters {
   display: flex;
   gap: 0.75rem;
@@ -424,7 +406,6 @@ const filteredProducts = computed(() => {
   box-shadow: 0 4px 10px rgba(66, 185, 131, 0.3);
 }
 
-/* --- СТИЛИ ПУСТОГО ЭКРАНА --- */
 .no-results {
   text-align: center;
   padding: 4rem 2rem;
@@ -474,14 +455,12 @@ const filteredProducts = computed(() => {
   box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
 }
 
-/* --- СЕТКА ТОВАРОВ И АНИМАЦИИ --- */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 2rem;
 }
 
-/* Плавные анимации при появлении/удалении карточек */
 .grid-enter-active,
 .grid-leave-active {
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);

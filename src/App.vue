@@ -16,15 +16,15 @@
 <script setup>
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
-import CartDrawer from './components/CartDrawer.vue' // ИМПОРТ
-import CheckoutModal from './components/CheckoutModal.vue' // ИМПОРТ
+import CartDrawer from './components/CartDrawer.vue'
+import CheckoutModal from './components/CheckoutModal.vue'
 import AuthPromptModal from './components/AuthPromptModal.vue'
 import LogoutModal from './components/LogoutModal.vue'
 import { store } from './store.js'
 </script>
 
 <style scoped>
-/* Оставляем только то, что касается структуры самого App.vue */
+
 .app-container {
   display: flex;
   flex-direction: column;

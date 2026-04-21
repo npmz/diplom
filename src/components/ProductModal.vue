@@ -54,7 +54,7 @@ const defaultBenefits = [
 
 const addToCartAndClose = () => {
   store.addToCart(props.product)
-  emit('close') // Закрываем окно после добавления товара
+  emit('close')
 }
 </script>
 

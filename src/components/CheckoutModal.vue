@@ -83,7 +83,6 @@ const processPayment = () => {
   isProcessing.value = true
 
   setTimeout(() => {
-    // Сохраняем товары в историю покупок
     store.confirmPurchase(store.cart)
 
     isProcessing.value = false
@@ -92,7 +91,6 @@ const processPayment = () => {
 }
 
 const finishAndRedirect = () => {
-  // Просто закрываем окно и переходим на главную (корзина уже очищена в confirmPurchase)
   emit('close')
   router.push('/')
 }
@@ -106,7 +104,7 @@ const finishAndRedirect = () => {
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(5px); /* Легкое размытие фона */
+  backdrop-filter: blur(5px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -196,7 +194,6 @@ input:focus {
   color: #e74c3c;
 }
 
-/* --- СТИЛИ ЭКРАНА УСПЕХА --- */
 .success-screen {
   text-align: center;
   animation: fadeIn 0.4s ease-out;
