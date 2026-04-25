@@ -51,4 +51,6 @@ import { store } from './store.js'
   margin: 0 auto;
   width: 100%;
 }
+
+
 </style>

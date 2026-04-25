@@ -2,7 +2,9 @@
   <div class="modal-overlay" @click.self="$emit('cancel')">
     <div class="modal-content surface-box">
       <div class="modal-body">
-        <div class="icon-circle">🗑️</div>
+        <div class="icon-circle">
+          <IconTrash />
+        </div>
         <h2>Удаление товара</h2>
         <p class="desc">
           Вы уверены, что хотите снять этот товар с продажи? <br>
@@ -19,6 +21,7 @@
 </template>
 
 <script setup>
+import IconTrash from './icons/IconTrash.vue'
 defineEmits(['confirm', 'cancel'])
 </script>
 
@@ -55,7 +58,6 @@ defineEmits(['confirm', 'cancel'])
 
 .icon-circle {
   font-size: 3rem;
-  background: rgba(231, 76, 60, 0.1);
   color: var(--color-danger);
   width: 80px;
   height: 80px;

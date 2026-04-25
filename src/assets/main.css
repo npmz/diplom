@@ -27,9 +27,18 @@ a,
     place-items: center;
   }
 
+  .icon {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    flex-shrink: 0; /* Не дает иконке сплющиваться во flex-контейнерах */
+    transition: color 0.3s ease;
+  }
+
   #app {
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
   }
+
 }

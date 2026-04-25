@@ -4,7 +4,7 @@
       <button class="close-btn" @click="store.closeAuthModal()">✖</button>
 
       <div class="modal-body">
-        <div class="icon-circle">🔒</div>
+        <div class="icon-circle"><IconLock /></div>
         <h2>Требуется авторизация</h2>
         <p class="desc">
           Чтобы добавлять товары в избранное и совершать покупки, пожалуйста, войдите в свой аккаунт или зарегистрируйтесь.
@@ -22,6 +22,7 @@
 <script setup>
 import { store } from '../store.js'
 import { useRouter } from 'vue-router'
+import IconLock from '../components/icons/IconLock.vue'
 
 const router = useRouter()
 

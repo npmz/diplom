@@ -6,14 +6,14 @@
         <h2>Каталог цифровых ключей</h2>
         <p>Выбирайте лучшее. Активируйте мгновенно.</p>
       </div>
-      <button class="btn btn-primary sell-btn" @click="openAddProduct">
+      <button @click="handleAddClick" class="btn btn-primary add-btn">
         + Продать товар
       </button>
     </div>
 
     <div class="controls-container">
       <div class="search-wrapper">
-        <span class="search-icon">🔍</span>
+        <span class="search-icon"><IconSearch /></span>
         <input
             type="text"
             v-model="searchQuery"
@@ -22,14 +22,14 @@
       </div>
 
       <div class="filters">
-        <button :class="{ active: currentFilter === 'All' }" @click="setFilter('All')">🌍 Все</button>
-        <button :class="{ active: currentFilter === 'Games' }" @click="setFilter('Games')">🎮 Игры</button>
-        <button :class="{ active: currentFilter === 'Software' }" @click="setFilter('Software')">💻 Софт</button>
+        <button :class="{ active: currentFilter === 'All' }" @click="setFilter('All')">Все</button>
+        <button :class="{ active: currentFilter === 'Games' }" @click="setFilter('Games')"><IconCube /> Игры</button>
+        <button :class="{ active: currentFilter === 'Software' }" @click="setFilter('Software')"><IconLaptop /> Софт</button>
       </div>
     </div>
 
     <div v-if="filteredProducts.length === 0" class="no-results">
-      <div class="empty-icon">🕵️‍♂️</div>
+      <div class="empty-icon"><IconArchive />️</div>
       <h3>Ничего не найдено</h3>
       <p>Мы не нашли товары по запросу "<strong>{{ searchQuery }}</strong>".</p>
       <button @click="resetSearch" class="reset-btn">Показать все товары</button>
@@ -64,6 +64,10 @@ import { store } from '../store.js'
 import ProductCard from '../components/ProductCard.vue'
 import ProductModal from '../components/ProductModal.vue'
 import AddProductModal from '../components/AddProductModal.vue'
+import IconSearch from '../components/icons/IconSearch.vue'
+import IconArchive from '../components/icons/IconArchive.vue'
+import IconCube from '../components/icons/IconCube.vue'
+import IconLaptop from '../components/icons/IconLaptop.vue'
 
 const router = useRouter()
 const showAddModal = ref(false)
@@ -358,6 +362,16 @@ const filteredProducts = computed(() => {
   box-sizing: border-box;
 }
 
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+  pointer-events: none;
+  display: flex;
+}
+
 .search-wrapper input:focus {
   outline: none;
   border-color: var(--color-primary);
@@ -368,12 +382,21 @@ const filteredProducts = computed(() => {
 
 .search-icon {
   position: absolute;
-  left: 15px;
+  left: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 1.2rem;
   color: var(--color-text-muted);
   pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.search-icon .icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
 .filters {
@@ -382,7 +405,15 @@ const filteredProducts = computed(() => {
   flex-wrap: wrap;
 }
 
+.filters button .icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: -2px;
+}
+
 .filters button {
+  align-items: center;
   padding: 0.75rem 1.5rem;
   border: 2px solid var(--color-border);
   background-color: var(--color-surface);

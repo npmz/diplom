@@ -13,9 +13,15 @@
         </div>
       </div>
       <div class="hero-graphics">
-        <div class="floating-icon icon-1">🎮</div>
-        <div class="floating-icon icon-2">💻</div>
-        <div class="floating-icon icon-3">🔑</div>
+        <div class="floating-icon icon-1">
+          <IconCube/>
+        </div>
+        <div class="floating-icon icon-2">
+          <IconLaptop/>
+        </div>
+        <div class="floating-icon icon-3">
+          <IconKey/>
+        </div>
       </div>
     </section>
 
@@ -23,23 +29,30 @@
       <div class="seller-content surface-box">
         <div class="seller-text">
           <div class="badge">Новинка</div>
-          <h2>Зарабатывай вместе с AllKeys 💸</h2>
+          <h2>Зарабатывай вместе с AllKeys</h2>
           <p class="seller-desc">
             Теперь мы работаем как полноценный P2P-маркетплейс! У вас завалялся лишний ключ от игры или программы?
             Не дайте ему пропасть — выставьте его на продажу в нашем каталоге и получите деньги на карту.
           </p>
           <ul class="benefits-list">
-            <li><span>⚡</span> Быстрая модерация (до 24 часов)</li>
-            <li><span>🛡️</span> Безопасные сделки и гарантия выплат</li>
-            <li><span>👥</span> Тысячи потенциальных покупателей каждый день</li>
+            <li>
+              <IconLightning/>
+              Быстрая модерация (до 24 часов)
+            </li>
+            <li>
+              <IconShield/>
+              Безопасные сделки и гарантия выплат
+            </li>
+            <li>
+              <IconUsers/>
+              Тысячи потенциальных покупателей каждый день
+            </li>
           </ul>
-          <button @click="handleSellClick" class="btn btn-sell">
-            Разместить товар
-          </button>
+          <button @click="handleSellClick" class="btn btn-sell">Разместить товар</button>
         </div>
         <div class="seller-visual">
           <div class="mockup-card">
-            <span class="mockup-icon">🤝</span>
+            <span class="mockup-icon"><IconBadgeCheck/></span>
             <h3>P2P Платформа</h3>
             <p>От игрока к игроку</p>
           </div>
@@ -49,17 +62,23 @@
 
     <section class="features-grid">
       <div class="feature-card surface-box">
-        <div class="feature-icon">🚀</div>
+        <div class="feature-icon">
+          <IconRocket/>
+        </div>
         <h3>Мгновенная доставка</h3>
         <p>Ключ автоматически отправляется на вашу почту и в личный кабинет сразу после оплаты.</p>
       </div>
       <div class="feature-card surface-box">
-        <div class="feature-icon">🔒</div>
-        <h3>Гарантия качества</h3>
+        <div class="feature-icon">
+          <IconLock/>
+        </div>
+        <h3>Гарантия безопасности</h3>
         <p>Все продавцы проходят проверку, а ключи валидируются перед публикацией в каталоге.</p>
       </div>
       <div class="feature-card surface-box">
-        <div class="feature-icon">🎧</div>
+        <div class="feature-icon">
+          <IconHeadphones/>
+        </div>
         <h3>Поддержка 24/7</h3>
         <p>Наша команда всегда готова помочь вам с активацией или решением любых спорных вопросов.</p>
       </div>
@@ -69,8 +88,19 @@
 </template>
 
 <script setup>
-import { store } from '../store.js'
-import { useRouter } from 'vue-router'
+import {store} from '../store.js'
+import {useRouter} from 'vue-router'
+
+import IconCube from '../components/icons/IconCube.vue'
+import IconLaptop from '../components/icons/IconLaptop.vue'
+import IconKey from '../components/icons/IconKey.vue'
+import IconBadgeCheck from '../components/icons/IconBadgeCheck.vue'
+import IconLightning from '../components/icons/IconLightning.vue'
+import IconShield from '../components/icons/IconShield.vue'
+import IconUsers from '../components/icons/IconUser.vue'
+import IconRocket from '../components/icons/IconRocket.vue'
+import IconLock from '../components/icons/IconLock.vue'
+import IconHeadphones from '../components/icons/IconHeadphones.vue'
 
 const router = useRouter()
 
@@ -143,10 +173,7 @@ const handleSellClick = () => {
 
 .floating-icon {
   position: absolute;
-  font-size: 4rem;
   background: var(--color-bg-body);
-  width: 100px;
-  height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -155,14 +182,58 @@ const handleSellClick = () => {
   animation: float 6s ease-in-out infinite;
 }
 
-.icon-1 { top: 0; right: 20px; animation-delay: 0s; }
-.icon-2 { bottom: 20px; left: 0; font-size: 3rem; width: 80px; height: 80px; animation-delay: 2s; }
-.icon-3 { bottom: 60px; right: 0; font-size: 3.5rem; width: 90px; height: 90px; animation-delay: 4s; }
+.icon-1 {
+  top: 0;
+  right: 20px;
+  width: 100px;
+  height: 100px;
+  animation-delay: 0s;
+}
+
+.icon-2 {
+  bottom: 20px;
+  left: 0;
+  width: 80px;
+  height: 80px;
+  animation-delay: 2s;
+}
+
+.icon-3 {
+  bottom: 60px;
+  right: 0;
+  width: 90px;
+  height: 90px;
+  animation-delay: 4s;
+}
+
+.icon-1 .icon {
+  width: 48px;
+  height: 48px;
+  color: var(--color-primary);
+}
+
+.icon-2 .icon {
+  width: 36px;
+  height: 36px;
+  color: var(--color-secondary);
+}
+
+.icon-3 .icon {
+  width: 42px;
+  height: 42px;
+  color: #f1c40f;
+}
 
 @keyframes float {
-  0% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-20px) rotate(5deg); }
-  100% { transform: translateY(0px) rotate(0deg); }
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
 }
 
 .seller-banner {
@@ -176,8 +247,6 @@ const handleSellClick = () => {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
   border: 2px solid rgba(241, 196, 15, 0.3);
-  position: relative;
-  overflow: hidden;
   background-image: linear-gradient(135deg, transparent 0%, rgba(241, 196, 15, 0.05) 100%);
 }
 
@@ -194,6 +263,7 @@ const handleSellClick = () => {
   background: #f1c40f;
   color: #2c3e50;
   padding: 0.3rem 0.8rem;
+  border-radius: var(--radius-pill);
   font-size: 0.8rem;
   font-weight: bold;
   display: inline-block;
@@ -230,12 +300,22 @@ const handleSellClick = () => {
   gap: 0.8rem;
 }
 
+.benefits-list li .icon {
+  width: 22px;
+  height: 22px;
+  color: #f1c40f;
+}
+
+/* Размер иконок в списке */
+
 .btn-sell {
   display: inline-block;
   padding: 1rem 2.5rem;
   background-color: #f1c40f;
   color: #2c3e50;
-  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
   font-weight: bold;
   border-radius: var(--radius-md);
   font-size: 1.1rem;
@@ -279,9 +359,14 @@ const handleSellClick = () => {
 }
 
 .mockup-icon {
-  font-size: 4rem;
   display: block;
   margin-bottom: 1rem;
+}
+
+.mockup-icon .icon {
+  width: 64px;
+  height: 64px;
+  color: #f1c40f;
 }
 
 .mockup-card h3 {
@@ -313,8 +398,13 @@ const handleSellClick = () => {
 }
 
 .feature-icon {
-  font-size: 3rem;
   margin-bottom: 1.5rem;
+}
+
+.feature-icon .icon {
+  width: 56px;
+  height: 56px;
+  color: var(--color-primary);
 }
 
 .feature-card h3 {
@@ -333,13 +423,16 @@ const handleSellClick = () => {
     padding: 2rem;
     text-align: center;
   }
+
   .hero-title {
     font-size: 2.5rem;
   }
+
   .seller-content {
     padding: 2rem;
     text-align: center;
   }
+
   .benefits-list li {
     justify-content: center;
   }

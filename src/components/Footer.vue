@@ -1,188 +1,87 @@
 <template>
-  <footer class="footer">
-    <div class="footer-container">
-      <div class="footer-section about">
-        <div class="logo">
-          <span class="logo-icon">🔑</span>
-          <span class="logo-text">All<span class="accent">Keys</span></span>
-        </div>
-        <p class="description">
-          Лучший маркетплейс цифровых товаров. Мы предлагаем лицензионные ключи для игр и софта с мгновенной доставкой и гарантией качества.
-        </p>
-        <div class="social-links">
-          <a href="#" class="social-icon">✈️</a>
-          <a href="#" class="social-icon">💬</a>
-          <a href="#" class="social-icon">🎮</a>
-        </div>
+  <footer class="footer surface-box">
+    <div class="footer-content">
+
+      <div class="footer-left">
+        <IconKey class="footer-logo" />
+        <span>&copy; {{ currentYear }} AllKeys. Все права защищены.</span>
       </div>
 
-      <div class="footer-section links">
-        <h4>Навигация</h4>
-        <ul>
-          <li><router-link to="/">Главная страница</router-link></li>
-          <li><router-link to="/products">Каталог товаров</router-link></li>
-          <li><router-link to="/cart">Корзина покупок</router-link></li>
-        </ul>
+      <div class="footer-links">
+        <a href="#">О проекте</a>
+        <a href="#">Пользовательское соглашение</a>
+        <a href="#">Поддержка</a>
       </div>
 
-      <div class="footer-section support">
-        <h4>Помощь</h4>
-        <ul>
-          <li><a href="#">Как активировать</a></li>
-          <li><a href="#">Гарантии</a></li>
-          <li><a href="#">Техподдержка</a></li>
-          <li><a href="#">Публичная оферта</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-section contacts">
-        <h4>Контакты</h4>
-        <p>Email: support@allkeys.ru</p>
-        <p>Режим работы: 24/7</p>
-        <div class="payment-methods">
-          <span title="Visa">💳</span>
-          <span title="Mastercard">🅿️</span>
-          <span title="Mir">🇷🇺</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <div class="bottom-container">
-        <p>&copy; 2026 AllKeys Store. Все права защищены. Все названия продуктов и логотипы являются собственностью их владельцев.</p>
-      </div>
     </div>
   </footer>
 </template>
 
+<script setup>
+import { computed } from 'vue'
+import IconKey from './icons/IconKey.vue' // Используем наш новый векторный ключ
+
+// Автоматически получаем текущий год
+const currentYear = computed(() => new Date().getFullYear())
+</script>
+
 <style scoped>
+/* Убираем огромные отступы, делаем подвал тонким */
 .footer {
-  background-color: #1a252f;
-  color: #ecf0f1;
-  padding-top: 4rem;
-  margin-top: auto;
+  padding: 1rem 2rem;
+  border-top: 1px solid var(--color-border);
+  margin-top: auto; /* Прижимает подвал к низу экрана, если контента мало */
 }
 
-.footer-container {
+.footer-content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem 3rem 2rem;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1.5fr;
-  gap: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem; /* Делаем шрифт чуть меньше основного (14px) */
+  color: var(--color-text-muted);
 }
 
-.logo {
+.footer-left {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-.logo-text {
-  font-size: 1.5rem;
-  font-weight: 800;
-}
-.logo-text .accent {
-  color: #42b983;
 }
 
-.description {
-  color: #bdc3c7;
-  line-height: 1.6;
-  font-size: 0.95rem;
-  margin-bottom: 1.5rem;
+.footer-logo {
+  width: 18px;
+  height: 18px;
+  color: var(--color-primary);
 }
 
-h4 {
-  color: white;
-  margin-bottom: 1.5rem;
-  font-size: 1.1rem;
-  position: relative;
-}
-h4::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 0;
-  width: 30px;
-  height: 2px;
-  background-color: #42b983;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-ul li {
-  margin-bottom: 0.8rem;
-}
-ul li a {
-  color: #bdc3c7;
-  text-decoration: none;
-  transition: all 0.3s;
-  font-size: 0.95rem;
-}
-ul li a:hover {
-  color: #42b983;
-  padding-left: 5px;
-}
-
-.social-links {
+.footer-links {
   display: flex;
-  gap: 1rem;
-}
-.social-icon {
-  font-size: 1.5rem;
-  text-decoration: none;
-  transition: transform 0.3s;
-}
-.social-icon:hover {
-  transform: translateY(-5px);
+  gap: 1.5rem;
 }
 
-.payment-methods {
-  margin-top: 1rem;
-  display: flex;
-  gap: 0.8rem;
-  font-size: 1.5rem;
-  filter: grayscale(0.5);
-  transition: filter 0.3s;
-}
-.payment-methods:hover {
-  filter: grayscale(0);
-}
-
-.footer-bottom {
-  background-color: #141d26;
-  padding: 1.5rem 0;
-  text-align: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-}
-.bottom-container p {
-  font-size: 0.85rem;
+.footer-links a {
   color: var(--color-text-muted);
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
-@media (max-width: 992px) {
-  .footer-container {
-    grid-template-columns: 1fr 1fr;
-    gap: 2.5rem;
-  }
+.footer-links a:hover {
+  color: var(--color-text-main);
 }
+
+/* Адаптивность для мобильных телефонов:
+   если экран узкий, выстраиваем в колонку, но оставляем компактным */
 @media (max-width: 600px) {
-  .footer-container {
-    grid-template-columns: 1fr;
+  .footer-content {
+    flex-direction: column;
+    gap: 0.8rem;
     text-align: center;
   }
-  h4::after {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .social-links, .payment-methods {
+  .footer-links {
+    flex-wrap: wrap;
     justify-content: center;
+    gap: 1rem;
   }
 }
 </style>

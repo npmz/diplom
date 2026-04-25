@@ -1,7 +1,7 @@
 <template>
   <div class="product-card" @click="$emit('openDetails', product)">
     <div class="image-container">
-      <img :src="product.image" :alt="product.name" />
+      <img :src="product.image" :alt="product.name"/>
 
       <div v-if="product.isCustom" class="user-badge">Добавлено пользователем</div>
 
@@ -10,8 +10,9 @@
           :class="{ 'is-active': store.isFavorite(product.id) }"
           @click.stop="handleFavoriteClick"
       >
-        <span v-if="store.isFavorite(product.id)">❤️</span>
-        <span v-else>🤍</span>
+        <IconHeartSolid v-if="store.isFavorite(product.id)"/>
+
+        <IconHeartOutline v-else/>
       </button>
     </div>
 
@@ -25,8 +26,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { store } from '../store.js'
+import {store} from '../store.js'
+import IconHeartOutline from './icons/IconHeartOutline.vue'
+import IconHeartSolid from './icons/IconHeartSolid.vue'
+import {ref} from 'vue'
 
 
 const props = defineProps(['product'])
@@ -56,11 +59,24 @@ const addToCart = () => {
 </script>
 
 <style scoped>
+
+.heart-filled {
+  color: var(--color-danger, #e74c3c);
+}
+
+.heart-outline {
+  color: var(--color-text-muted);
+}
+
+.favorite-btn:hover .heart-outline {
+  color: var(--color-danger, #e74c3c);
+}
+
 .favorite-btn {
   position: absolute;
   top: 10px;
+  background: transparent;
   right: 10px;
-  background: var(--color-surface);
   border: none;
   width: 35px;
   height: 35px;
@@ -81,15 +97,12 @@ const addToCart = () => {
   box-shadow: var(--shadow-md);
 }
 
-.favorite-btn.is-active {
-  background: var(--color-surface);
-}
 .product-card {
   background-color: var(--color-surface);
   padding: 1.5rem;
   border-radius: 8px;
   text-align: center;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
   display: flex;
@@ -98,7 +111,7 @@ const addToCart = () => {
 
 .product-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
 }
 
 .product-card img {

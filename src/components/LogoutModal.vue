@@ -2,7 +2,7 @@
   <div class="modal-overlay" @click.self="store.closeLogoutModal()">
     <div class="modal-content surface-box">
       <div class="modal-body">
-        <div class="icon-circle">🚪</div>
+        <div class="icon-circle"><IconLogout /></div>
         <h2>Выход из аккаунта</h2>
         <p class="desc">
           Вы уверены, что хотите выйти? <br>
@@ -21,6 +21,7 @@
 <script setup>
 import { store } from '../store.js'
 import { useRouter } from 'vue-router'
+import IconLogout from '../components/icons/IconLogout.vue'
 
 const router = useRouter()
 

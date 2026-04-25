@@ -3,20 +3,20 @@
     <div v-if="store.isAuthenticated" class="dashboard">
 
       <div class="user-info surface-box">
-        <div class="avatar">👤</div>
+        <div class="avatar"><IconUser /></div>
         <h2>Привет, {{ store.currentUser.name }}!</h2>
         <p class="email">{{ store.currentUser.email }}</p>
       </div>
 
       <div class="profile-tabs surface-box">
         <button :class="{ active: activeTab === 'purchases' }" @click="activeTab = 'purchases'">
-          📦 Мои покупки ({{ store.userPurchases.length }})
+          Мои покупки ({{ store.userPurchases.length }})
         </button>
         <button :class="{ active: activeTab === 'favorites' }" @click="activeTab = 'favorites'">
-          ❤️ Избранное ({{ store.favorites.length }})
+          Избранное ({{ store.favorites.length }})
         </button>
         <button :class="{ active: activeTab === 'my-products' }" @click="activeTab = 'my-products'">
-          🏪 Мои товары ({{ store.userCustomProducts.length }})
+          Мои товары ({{ store.userCustomProducts.length }})
         </button>
       </div>
 
@@ -74,7 +74,7 @@
               <div class="purchase-price">{{ item.price }} ₽</div>
 
               <button @click="confirmDeleteProduct(item.id)" class="btn-delete" title="Снять с продажи">
-                🗑️ Удалить
+                Удалить
               </button>
             </div>
           </div>
@@ -110,11 +110,12 @@
 
         <form v-if="isLoginTab" @submit.prevent="handleLogin" class="auth-form">
           <div class="input-group">
-            <span class="input-icon">✉️</span>
+            <span class="input-icon"><IconMail /></span>
             <input type="email" v-model="loginData.email" required placeholder="Ваш Email">
           </div>
+
           <div class="input-group">
-            <span class="input-icon">🔒</span>
+            <span class="input-icon"><IconLock /></span>
             <input type="password" v-model="loginData.password" required placeholder="Пароль">
           </div>
 
@@ -128,16 +129,18 @@
 
         <form v-else @submit.prevent="handleRegister" class="auth-form">
           <div class="input-group">
-            <span class="input-icon">👤</span>
+            <span class="input-icon"><IconMail /></span>
+            <input type="email" v-model="loginData.email" required placeholder="Ваш Email">
+          </div>
+
+          <div class="input-group">
+            <span class="input-icon"><IconLock /></span>
+            <input type="password" v-model="loginData.password" required placeholder="Пароль">
+          </div>
+
+          <div class="input-group">
+            <span class="input-icon"><IconUser /></span>
             <input type="text" v-model="registerData.name" required placeholder="Как к вам обращаться?">
-          </div>
-          <div class="input-group">
-            <span class="input-icon">✉️</span>
-            <input type="email" v-model="registerData.email" required placeholder="Ваш Email">
-          </div>
-          <div class="input-group">
-            <span class="input-icon">🔒</span>
-            <input type="password" v-model="registerData.password" required placeholder="Придумайте пароль" minlength="6">
           </div>
 
           <button type="submit" class="btn btn-primary w-100">Зарегистрироваться</button>
@@ -158,11 +161,16 @@
 </template>
 
 <script setup>
+
 import { ref, reactive } from 'vue'
 import { store } from '../store.js'
 import ProductCard from '../components/ProductCard.vue'
 import ResetPasswordModal from '../components/ResetPasswordModal.vue'
 import ConfirmDeleteModal from '../components/ConfirmDeleteModal.vue'
+
+import IconUser from '../components/icons/IconUser.vue'
+import IconLock from '../components/icons/IconLock.vue'
+import IconMail from '../components/icons/IconMail.vue'
 
 const activeTab = ref('purchases')
 const isLoginTab = ref(true)
@@ -600,6 +608,11 @@ const handleLogout = () => {
 .avatar {
   font-size: 4rem;
   margin-bottom: 1rem;
+}
+
+.avatar .icon {
+  width: 40px;
+  height: 40px;
 }
 
 .user-info h2 {
