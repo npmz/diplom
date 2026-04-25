@@ -8,9 +8,8 @@
       </div>
 
       <div v-if="store.cart.length === 0" class="empty-cart">
-        <div class="empty-icon">🛒</div>
         <h3>Ваша корзина пуста</h3>
-        <p>Загляните в каталог, чтобы выбрать отличные товары.</p>
+        <p class="cart-text">Загляните в каталог, чтобы выбрать отличные товары.</p>
         <router-link to="/products" class="btn btn-primary" @click="store.toggleCart()">Перейти в каталог</router-link>
       </div>
 
@@ -248,5 +247,9 @@ const promptAuth = () => {
 .btn-checkout {
   padding: 1rem;
   font-size: 1.1rem;
+}
+
+.cart-text {
+  margin-bottom: 2rem;
 }
 </style>
