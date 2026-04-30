@@ -79,9 +79,9 @@ const searchQuery = ref('')
 
 const handleAddClick = () => {
   if (store.isAuthenticated) {
-    showAddModal.value = true // Открываем модальное окно добавления
+    showAddModal.value = true
   } else {
-    store.openAuthModal() // Если не вошел - просим авторизоваться
+    store.openAuthModal()
   }
 }
 
