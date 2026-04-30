@@ -69,12 +69,21 @@ import IconArchive from '../components/icons/IconArchive.vue'
 import IconCube from '../components/icons/IconCube.vue'
 import IconLaptop from '../components/icons/IconLaptop.vue'
 
+
 const router = useRouter()
 const showAddModal = ref(false)
 
 const currentFilter = ref('All')
 const selectedProduct = ref(null)
 const searchQuery = ref('')
+
+const handleAddClick = () => {
+  if (store.isAuthenticated) {
+    showAddModal.value = true // Открываем модальное окно добавления
+  } else {
+    store.openAuthModal() // Если не вошел - просим авторизоваться
+  }
+}
 
 const openProductModal = (product) => {
   selectedProduct.value = product
