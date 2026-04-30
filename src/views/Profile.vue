@@ -91,7 +91,6 @@
       <div class="auth-container surface-box">
 
         <div class="auth-header">
-          <div class="logo-circle">🔑</div>
           <h2>{{ isLoginTab ? 'С возвращением!' : 'Создать аккаунт' }}</h2>
           <p class="auth-subtitle">
             {{ isLoginTab ? 'Рады видеть вас снова. Войдите, чтобы продолжить.' : 'Присоединяйтесь к AllKeys и покупайте выгодно.' }}
